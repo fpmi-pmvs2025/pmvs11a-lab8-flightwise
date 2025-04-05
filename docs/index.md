@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/docs/styles/style.scss">
+<link rel="stylesheet" href="/styles/styles.scss">
 <div class="sidebar">
     <ul>
         <li><a href="index.html">Home</a></li>
