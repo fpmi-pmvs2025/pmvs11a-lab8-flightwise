@@ -1,0 +1,9 @@
+title: Flightwise
+description: Application for buying airplane tickets
+theme: jekyll-theme-minimal
+
+aux_links:
+  GitHub Repository: https://github.com/fpmi-pmvs2025/pmvs11a-lab8-flightwise
+
+sass:
+  style: compressed
