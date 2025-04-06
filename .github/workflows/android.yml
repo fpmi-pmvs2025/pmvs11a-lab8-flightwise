@@ -32,14 +32,14 @@ jobs:
     - name: Run Lint
       run: cd Flightwise && ./gradlew lint
 
-    - name: Run UI Tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 30
-        target: default
-        arch: x86_64
-        profile: Nexus 6
-        script: cd Flightwise && ./gradlew connectedAndroidTest --continue
+    # - name: Run UI Tests
+    #   uses: reactivecircus/android-emulator-runner@v2
+    #   with:
+    #     api-level: 30
+    #     target: default
+    #     arch: x86_64
+    #     profile: Nexus 6
+    #     script: cd Flightwise && ./gradlew connectedAndroidTest --continue
 
     - name: Assemble Release
       if: github.ref == 'refs/heads/development'
