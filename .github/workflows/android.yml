@@ -24,13 +24,13 @@ jobs:
       run: chmod +x Flightwise/gradlew
 
     - name: Build with Gradle
-      run: Flightwise/gradlew build
+      run: cd Flightwise && ./gradlew build
 
     - name: Run Unit Tests
-      run: Flightwise/gradlew test --continue
+      run: cd Flightwise && ./gradlew test --continue
 
     - name: Run Lint
-      run: Flightwise/gradlew lint
+      run: cd Flightwise && ./gradlew lint
 
     - name: Run UI Tests
       uses: reactivecircus/android-emulator-runner@v2
@@ -39,15 +39,15 @@ jobs:
         target: default
         arch: x86_64
         profile: Nexus 6
-        script: Flightwise/gradlew connectedAndroidTest --continue
+        script: cd Flightwise && ./gradlew connectedAndroidTest --continue
 
     - name: Assemble Release
       if: github.ref == 'refs/heads/development'
-      run: Flightwise/gradlew assembleRelease
+      run: cd Flightwise && ./gradlew assembleRelease
 
     - name: Upload APK
       if: github.ref == 'refs/heads/development'
       uses: actions/upload-artifact@v4
       with:
         name: app-release
-        path: app/build/outputs/apk/release/app-release.apk
+        path: Flightwise/app/build/outputs/apk/release/app-release.apk
