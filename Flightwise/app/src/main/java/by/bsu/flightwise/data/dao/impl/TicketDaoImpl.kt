@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import by.bsu.flightwise.data.dao.TicketDao
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Ticket
+import by.bsu.flightwise.data.entity.TicketStatus
 import java.util.Date
 
 class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
@@ -14,7 +15,6 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
         private const val COLUMN_ID = DatabaseHelper.COLUMN_ID
         private const val COLUMN_PASSENGER_ID = DatabaseHelper.COLUMN_PASSENGER_ID
         private const val COLUMN_FLIGHT_ID = DatabaseHelper.COLUMN_FLIGHT_ID
-        private const val COLUMN_SEAT_NUMBER = DatabaseHelper.COLUMN_SEAT_NUMBER
         private const val COLUMN_PRICE = DatabaseHelper.COLUMN_PRICE
         private const val COLUMN_PAYMENT_ID = DatabaseHelper.COLUMN_PAYMENT_ID
         private const val COLUMN_HAS_LUGGAGE = DatabaseHelper.COLUMN_HAS_LUGGAGE
@@ -26,7 +26,6 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
         val values = ContentValues().apply {
             put(COLUMN_PASSENGER_ID, ticket.passengerId)
             put(COLUMN_FLIGHT_ID, ticket.flightId)
-            put(COLUMN_SEAT_NUMBER, ticket.seatNumber)
             put(COLUMN_PRICE, ticket.price)
         }
         return db.insert(TABLE_TICKETS, null, values)
@@ -55,7 +54,6 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
         val values = ContentValues().apply {
             put(COLUMN_PASSENGER_ID, ticket.passengerId)
             put(COLUMN_FLIGHT_ID, ticket.flightId)
-            put(COLUMN_SEAT_NUMBER, ticket.seatNumber)
             put(COLUMN_PRICE, ticket.price)
         }
         return db.update(
@@ -134,14 +132,19 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
             id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
             passengerId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_PASSENGER_ID)),
             flightId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FLIGHT_ID)),
-            seatNumber = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SEAT_NUMBER)),
             price = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
             paymentId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_ID)),
             hasLuggage = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HAS_LUGGAGE)) > 0,
             bookedAt = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOKED_AT))?.let {
                 Date(it)
             } ?: Date(),
-            status = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)) ?: "PENDING"
+            status = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))?.let {
+                try {
+                    TicketStatus.valueOf(it)
+                } catch (e: IllegalArgumentException) {
+                    TicketStatus.PENDING
+                }
+            } ?: TicketStatus.PENDING
         )
     }
 } 

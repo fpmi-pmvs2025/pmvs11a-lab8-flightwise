@@ -7,9 +7,14 @@ data class Ticket(
     val passengerId: Long,
     val paymentId: Long?,
     val flightId: Long,
-    val seatNumber: String,
     val price: Float,
     val hasLuggage: Boolean = false,
     val bookedAt: Date,
-    val status: String
+    val status: TicketStatus = TicketStatus.PENDING
 )
+
+enum class TicketStatus {
+    PENDING,
+    BOOKED,
+    CANCELED
+}

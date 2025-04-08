@@ -21,7 +21,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_ID = "id"
         const val COLUMN_USERNAME = "username"
         const val COLUMN_PASSWORD_HASH = "password_hash"
-        const val COLUMN_ROLE = "role"
         const val COLUMN_NAME = "name"
         const val COLUMN_SURNAME = "surname"
         const val COLUMN_PASSPORT_NUMBER = "passport_number"
@@ -42,7 +41,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_ARRIVAL_TIME = "arrival_time"
         const val COLUMN_PASSENGER_ID = "passenger_id"
         const val COLUMN_FLIGHT_ID = "flight_id"
-        const val COLUMN_SEAT_NUMBER = "seat_number"
         const val COLUMN_PRICE = "price"
         const val COLUMN_USER_ID = "user_id"
         const val COLUMN_DATE = "date"
@@ -61,7 +59,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_USERNAME VARCHAR(50) NOT NULL UNIQUE,
                 $COLUMN_PASSWORD_HASH VARCHAR(255) NOT NULL,
-                $COLUMN_ROLE VARCHAR(20) NOT NULL CHECK ($COLUMN_ROLE IN ('admin', 'passenger')),
                 $COLUMN_CREATED_AT DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
@@ -124,7 +121,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 $COLUMN_PASSENGER_ID INTEGER NOT NULL,
                 $COLUMN_PAYMENT_ID INTEGER,
                 $COLUMN_FLIGHT_ID INTEGER NOT NULL,
-                $COLUMN_SEAT_NUMBER VARCHAR(10) NOT NULL,
                 $COLUMN_HAS_LUGGAGE INTEGER NOT NULL DEFAULT 0 CHECK ($COLUMN_HAS_LUGGAGE IN (0, 1)),
                 $COLUMN_PRICE REAL NOT NULL CHECK ($COLUMN_PRICE >= 0),
                 $COLUMN_BOOKED_AT DATE NOT NULL,
@@ -140,7 +136,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_USER_ID INTEGER NOT NULL,
                 $COLUMN_TYPE VARCHAR(20) NOT NULL CHECK ($COLUMN_TYPE IN ('card', 'cash', 'online')),
-                $COLUMN_STATUS VARCHAR(20) NOT NULL DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'COMPLETED', 'REFUNDED', 'FAILED')),
+                $COLUMN_STATUS VARCHAR(20) NOT NULL DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'BOOKED', 'CANCELED')),
                 $COLUMN_DATE DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY ($COLUMN_USER_ID) REFERENCES $TABLE_USERS($COLUMN_ID)
             )
