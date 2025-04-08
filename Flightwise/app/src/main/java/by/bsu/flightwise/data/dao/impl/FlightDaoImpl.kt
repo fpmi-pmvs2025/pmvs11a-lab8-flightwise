@@ -175,8 +175,8 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
                 airplaneId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_AIRPLANE_ID)),
                 fromAirportId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DEPARTURE_AIRPORT_ID)),
                 toAirportId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ARRIVAL_AIRPORT_ID)),
-                departureTime = Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DEPARTURE_TIME))),
-                arrivalTime = Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ARRIVAL_TIME))),
+                departureTime = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DEPARTURE_TIME)))!!,
+                arrivalTime = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ARRIVAL_TIME)))!!,
                 pricingRuleId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_PRICING_RULE_ID))
             )
         } catch (e: Exception) {

@@ -4,16 +4,17 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import by.bsu.flightwise.data.dao.AirportDao
+import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Airport
 
 class AirportDaoImpl(private val db: SQLiteDatabase) : AirportDao {
     companion object {
-        private const val TABLE_AIRPORTS = "airports"
-        private const val COLUMN_ID = "id"
-        private const val COLUMN_NAME = "name"
-        private const val COLUMN_CODE = "code"
-        private const val COLUMN_CITY = "city"
-        private const val COLUMN_COUNTRY = "country"
+        private const val TABLE_AIRPORTS = DatabaseHelper.TABLE_AIRPORTS
+        private const val COLUMN_ID = DatabaseHelper.COLUMN_ID
+        private const val COLUMN_NAME = DatabaseHelper.COLUMN_NAME
+        private const val COLUMN_CODE = DatabaseHelper.COLUMN_CODE
+        private const val COLUMN_CITY = DatabaseHelper.COLUMN_CITY
+        private const val COLUMN_COUNTRY = DatabaseHelper.COLUMN_COUNTRY
     }
 
     override fun insert(airport: Airport): Long {

@@ -4,14 +4,15 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import by.bsu.flightwise.data.dao.PricingRuleDao
+import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.PricingRule
 
 class PricingRuleDaoImpl(private val db: SQLiteDatabase) : PricingRuleDao {
     companion object {
-        private const val TABLE_PRICING_RULES = "pricing_rules"
-        private const val COLUMN_ID = "id"
-        private const val COLUMN_NAME = "name"
-        private const val COLUMN_FEE = "fee"
+        private const val TABLE_PRICING_RULES = DatabaseHelper.TABLE_PRICING_RULES
+        private const val COLUMN_ID = DatabaseHelper.COLUMN_ID
+        private const val COLUMN_NAME = DatabaseHelper.COLUMN_NAME
+        private const val COLUMN_FEE = DatabaseHelper.COLUMN_FEE
     }
 
     override fun insert(pricingRule: PricingRule): Long {

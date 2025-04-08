@@ -4,15 +4,16 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import by.bsu.flightwise.data.dao.AirplaneDao
+import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Airplane
 import java.util.Date
 
 class AirplaneDaoImpl(private val db: SQLiteDatabase) : AirplaneDao {
     companion object {
-        private const val TABLE_AIRPLANES = "airplanes"
-        private const val COLUMN_ID = "id"
-        private const val COLUMN_MODEL = "model"
-        private const val COLUMN_CAPACITY = "capacity"
+        private const val TABLE_AIRPLANES = DatabaseHelper.TABLE_AIRPLANES
+        private const val COLUMN_ID = DatabaseHelper.COLUMN_ID
+        private const val COLUMN_MODEL = DatabaseHelper.COLUMN_MODEL
+        private const val COLUMN_CAPACITY = DatabaseHelper.COLUMN_CAPACITY
     }
 
     override fun insert(airplane: Airplane): Long {
