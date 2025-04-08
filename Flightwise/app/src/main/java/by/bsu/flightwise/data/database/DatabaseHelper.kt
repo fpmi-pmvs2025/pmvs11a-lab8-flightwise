@@ -33,7 +33,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val COLUMN_TYPE = "type"
         const val COLUMN_FEE = "fee"
         const val COLUMN_AIRPLANE_ID = "airplane_id"
-        const val COLUMN_PILOT_ID = "pilot_id"
         const val COLUMN_DEPARTURE_AIRPORT_ID = "departure_airport_id"
         const val COLUMN_ARRIVAL_AIRPORT_ID = "arrival_airport_id"
         const val COLUMN_PAYMENT_ID = "payment_id"
@@ -92,7 +91,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             CREATE TABLE $TABLE_FLIGHTS (
                 $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_AIRPLANE_ID INTEGER NOT NULL,
-                $COLUMN_PILOT_ID INTEGER NOT NULL,
                 $COLUMN_DEPARTURE_AIRPORT_ID INTEGER NOT NULL,
                 $COLUMN_ARRIVAL_AIRPORT_ID INTEGER NOT NULL,
                 $COLUMN_DEPARTURE_TIME DATETIME NOT NULL,
