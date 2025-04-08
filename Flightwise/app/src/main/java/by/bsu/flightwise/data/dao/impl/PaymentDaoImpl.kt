@@ -4,8 +4,11 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import by.bsu.flightwise.data.dao.PaymentDao
+import by.bsu.flightwise.data.dao.impl.TicketDaoImpl.Companion
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Payment
+import by.bsu.flightwise.data.entity.PaymentStatus
+import by.bsu.flightwise.data.entity.TicketStatus
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -16,6 +19,7 @@ class PaymentDaoImpl(private val db: SQLiteDatabase) : PaymentDao {
         private const val COLUMN_USER_ID = DatabaseHelper.COLUMN_USER_ID
         private const val COLUMN_TYPE = DatabaseHelper.COLUMN_TYPE
         private const val COLUMN_DATE = DatabaseHelper.COLUMN_DATE
+        private const val COLUMN_STATUS = DatabaseHelper.COLUMN_STATUS
         
         private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
     }
@@ -95,6 +99,13 @@ class PaymentDaoImpl(private val db: SQLiteDatabase) : PaymentDao {
             userId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)),
             type = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE)),
             date = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE)))!!,
+            status = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))?.let {
+                try {
+                    PaymentStatus.valueOf(it)
+                } catch (e: IllegalArgumentException) {
+                    PaymentStatus.PENDING
+                }
+            } ?: PaymentStatus.PENDING
         )
     }
 } 
