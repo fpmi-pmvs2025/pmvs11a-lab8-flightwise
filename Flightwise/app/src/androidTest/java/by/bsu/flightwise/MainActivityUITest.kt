@@ -3,6 +3,7 @@ package by.bsu.flightwise
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import by.bsu.flightwise.ui.activities.FlightwiseApp
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import org.junit.Rule
 import org.junit.Test
