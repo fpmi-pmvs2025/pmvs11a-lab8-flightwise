@@ -19,11 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,7 +46,6 @@ class MainActivity : ComponentActivity() {
 fun FlightwiseApp() {
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // Header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -114,7 +112,7 @@ fun FlightwiseApp() {
                         )
                         DropdownMenuItem(
                             onClick = { navigateToCountriesActivity() },
-                            text = { Text("Contries", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text("Countries", style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier
                                 .background(MaterialTheme.colorScheme.secondary),
@@ -136,8 +134,6 @@ fun FlightwiseApp() {
             }
         }
 
-
-        // Footer
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -153,7 +149,7 @@ fun FlightwiseApp() {
             )
         }
 
-        // Main Content
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -162,7 +158,7 @@ fun FlightwiseApp() {
                 .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Display Image
+
             Image(
                 painter = painterResource(id = R.drawable.main_activity_header),
                 contentDescription = "Main Activity Header",
@@ -173,7 +169,7 @@ fun FlightwiseApp() {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Section 1
+
             Text(
                 text = "Discover countries",
                 color = MaterialTheme.colorScheme.primary,
@@ -198,7 +194,6 @@ fun FlightwiseApp() {
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Section 2
             Text(
                 text = "Ready to go",
                 color = MaterialTheme.colorScheme.primary,
@@ -254,10 +249,5 @@ private fun navigateToProfileActivity() {
 
 private fun navigateToTicketsActivity() {
     // val intent = Intent(this, TicketsActivity::class.java)
-    // startActivity(intent)
-}
-
-private fun navigateToCountryActivity() {
-    // val intent = Intent(this, CountryActivity::class.java)
     // startActivity(intent)
 }
