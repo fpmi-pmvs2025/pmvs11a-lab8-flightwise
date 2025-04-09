@@ -20,11 +20,24 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
     - name: Grant execute permission for gradlew
       run: chmod +x Flightwise/gradlew
 
     - name: Build with Gradle
       run: cd Flightwise && ./gradlew build
+
+    - name: Build the app
+      run: cd Flightwise && ./gradlew assembleDebug
 
     - name: Run Unit Tests
       run: cd Flightwise && ./gradlew test --continue
@@ -32,14 +45,13 @@ jobs:
     - name: Run Lint
       run: cd Flightwise && ./gradlew lint
 
-    # - name: Run UI Tests
-    #   uses: reactivecircus/android-emulator-runner@v2
-    #   with:
-    #     api-level: 30
-    #     target: default
-    #     arch: x86_64
-    #     profile: Nexus 6
-    #     script: cd Flightwise && ./gradlew connectedAndroidTest --continue
+    - name: Run UI Tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 33
+        arch: x86_64
+        profile: Nexus 6
+        script: cd Flightwise && ./gradlew connectedDebugAndroidTest --continue
 
     - name: Assemble Release
       if: github.ref == 'refs/heads/development'
