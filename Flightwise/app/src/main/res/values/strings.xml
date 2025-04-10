@@ -23,8 +23,8 @@
     <string name="flights_return_date_placeholder">Date of return</string>
     <string name="flights_passengers_placeholder">Number of passengers</string>
     <string name="search_button_text">Search</string>
-    <sting name="error_message_fill_form">Please, fill the form</sting>
-    <sting name="error_message_data_wrong">Please, check filled data</sting>
+    <string name="error_message_fill_form">Please, fill the form</sting>
+    <string name="error_message_data_wrong">Please, check filled data</sting>
     <string name="luggage_checkbox_text">With luggage</string>
 
     <!-- union for: Price for n passengers -->
