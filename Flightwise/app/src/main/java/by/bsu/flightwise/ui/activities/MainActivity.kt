@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,18 +12,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
-
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
 class MainActivity : ComponentActivity() {
@@ -44,8 +41,15 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun FlightwiseApp() {
+    // Get the current context from Compose
+    val context = LocalContext.current
+
+    // Use a state value to manage the dropdown menu's expanded state
+    var expanded by remember { mutableStateOf(false) }
+
     Box(modifier = Modifier.fillMaxSize()) {
 
+        // Top App Bar with a dropdown menu
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,8 +69,6 @@ fun FlightwiseApp() {
                     modifier = Modifier.weight(1f)
                 )
 
-                var expanded by remember { mutableStateOf(false) }
-
                 Box {
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(
@@ -80,10 +82,10 @@ fun FlightwiseApp() {
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
                         modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary)
-                                .width(160.dp),
+                            .background(MaterialTheme.colorScheme.secondary)
+                            .width(160.dp)
                     ) {
-                        val ThemeColors = MenuDefaults.itemColors(
+                        val themeColors = MenuDefaults.itemColors(
                             textColor = MaterialTheme.colorScheme.onSecondary,
                             leadingIconColor = MaterialTheme.colorScheme.secondary,
                             trailingIconColor = MaterialTheme.colorScheme.tertiary,
@@ -93,40 +95,47 @@ fun FlightwiseApp() {
                         )
 
                         DropdownMenuItem(
-                            onClick = { navigateToProfileActivity() },
+                            onClick = {
+                                //context.startActivity(Intent(context, ProfileActivity::class.java))
+                                expanded = false
+                            },
                             text = { Text("Profile", style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary),
-                            colors = ThemeColors,
+                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                            colors = themeColors,
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                         )
                         DropdownMenuItem(
-                            onClick = { navigateToTicketsActivity() },
+                            onClick = {
+                                //context.startActivity(Intent(context, TicketsActivity::class.java))
+                                expanded = false
+                            },
                             text = { Text("Tickets", style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary),
-                            colors = ThemeColors,
+                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                            colors = themeColors,
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                         )
                         DropdownMenuItem(
-                            onClick = { navigateToCountriesActivity() },
+                            onClick = {
+                                //context.startActivity(Intent(context, CountriesActivity::class.java))
+                                expanded = false
+                            },
                             text = { Text("Countries", style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary),
-                            colors = ThemeColors,
-
+                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                            colors = themeColors,
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                         )
                         DropdownMenuItem(
-                            onClick = { navigateToAboutActivity() },
+                            onClick = {
+                                context.startActivity(Intent(context, AboutActivity::class.java))
+                                expanded = false
+                            },
                             text = { Text("About", style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.secondary),
-                            colors = ThemeColors,
+                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                            colors = themeColors,
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                         )
                     }
@@ -134,6 +143,7 @@ fun FlightwiseApp() {
             }
         }
 
+        // Footer
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -149,7 +159,7 @@ fun FlightwiseApp() {
             )
         }
 
-
+        // Main Content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -169,21 +179,26 @@ fun FlightwiseApp() {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-
             Text(
                 text = "Discover countries",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 8.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
             )
             Text(
                 text = "To choose a ticket, you can firstly discover countries here",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.align(Alignment.Start).padding(start = 1.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 1.dp)
             )
             Button(
-                onClick = { navigateToCountriesActivity() },
+                onClick = {
+                    // context.startActivity(Intent(context, CountriesActivity::class.java))
+                },
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .width(160.dp),
@@ -198,16 +213,22 @@ fun FlightwiseApp() {
                 text = "Ready to go",
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.align(Alignment.Start).padding(bottom = 8.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
             )
             Text(
                 text = "If you know your choice, you can go ahead and buy a ticket!",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier.align(Alignment.Start).padding(start = 1.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 1.dp)
             )
             Button(
-                onClick = { navigateToSearchTicketsActivity() },
+                onClick = {
+                    // context.startActivity(Intent(context, SearchTicketsActivity::class.java))
+                },
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .width(160.dp),
@@ -225,29 +246,4 @@ fun FlightwiseAppPreview() {
     FlightwiseTheme {
         FlightwiseApp()
     }
-}
-
-private fun navigateToCountriesActivity() {
-    // val intent = Intent(this, CountriesActivity::class.java)
-    // startActivity(intent)
-}
-
-private fun navigateToSearchTicketsActivity() {
-    // val intent = Intent(this, SearchTicketsActivity::class.java)
-    // startActivity(intent)
-}
-
-private fun navigateToAboutActivity() {
-    // val intent = Intent(this, AboutActivity::class.java)
-    // startActivity(intent)
-}
-
-private fun navigateToProfileActivity() {
-    // val intent = Intent(this, ProfileActivity::class.java)
-    // startActivity(intent)
-}
-
-private fun navigateToTicketsActivity() {
-    // val intent = Intent(this, TicketsActivity::class.java)
-    // startActivity(intent)
 }
