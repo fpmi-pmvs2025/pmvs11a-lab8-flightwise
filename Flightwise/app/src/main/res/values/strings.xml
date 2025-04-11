@@ -27,9 +27,8 @@
     <string name="error_message_data_wrong">Please, check filled data</string>
     <string name="luggage_checkbox_text">With luggage</string>
 
-    <!-- union for: Price for n passengers -->
-    <string name="flight_price_text">Price for </string>
-    <string name="flight_passengers_text"> passengers</string>
+    <string name="flight_price_for_passengers">Price for %d passengers</string>
+    <string name="flight_price_for_passenger">Price for %d passenger</string>
 
     <string name="name_placeholder">Name</string>
     <string name="surname_placeholder">Surname</string>

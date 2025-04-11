@@ -27,9 +27,8 @@
     <string name="error_message_data_wrong">Пожалуйста, проверьте введённые данные</string>
     <string name="luggage_checkbox_text">С багажом</string>
 
-    <!-- union for: Price for n passengers -->
-    <string name="flight_price_text">Цена за </string>
-    <string name="flight_passengers_text"> пассажиров</string>
+    <string name="flight_price_for_passengers">Цена для %d пассажиров</string>
+    <string name="flight_price_for_passenger">Цена для %d пассажирора</string>
 
     <string name="name_placeholder">Имя</string>
     <string name="surname_placeholder">Фамилия</string>
