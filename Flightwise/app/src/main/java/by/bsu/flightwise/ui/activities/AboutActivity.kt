@@ -145,7 +145,7 @@ fun AboutScreen() {
                 style = MaterialTheme.typography.headlineMedium
             )
             Text(
-                text = "Your Developer / Company Name",
+                text = "Raitsyna Yuliya, Filippov Cyril, Senkevich Stanislau",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp)
