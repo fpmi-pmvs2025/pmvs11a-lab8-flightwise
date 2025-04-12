@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsu.flightwise.R
@@ -144,6 +145,7 @@ fun AboutScreen() {
                 text = stringResource(id = R.string.team_members),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
