@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,15 +14,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
-class MainActivity : ComponentActivity() {
+class AboutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    FlightwiseApp()
+                    AboutScreen()
                 }
             }
         }
@@ -41,10 +40,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun FlightwiseApp() {
-
+fun AboutScreen() {
     val context = LocalContext.current
-
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -60,9 +57,8 @@ fun FlightwiseApp() {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Text(
-                    stringResource(id = R.string.app_name),
+                    text = "Flightwise",
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.weight(1f)
@@ -126,20 +122,32 @@ fun FlightwiseApp() {
                             colors = themeColors,
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
                         )
-                        DropdownMenuItem(
-                            onClick = {
-                                context.startActivity(Intent(context, AboutActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text(stringResource(id = R.string.menu_about), style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
                     }
                 }
             }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .padding(top = 80.dp, bottom = 64.dp)
+                .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(id = R.string.about_creators_text),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Text(
+                text = stringResource(id = R.string.team_members),
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
 
         Box(
@@ -156,91 +164,13 @@ fun FlightwiseApp() {
                 style = MaterialTheme.typography.labelSmall
             )
         }
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
-                .padding(top = 80.dp, bottom = 64.dp)
-                .align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.main_activity_header),
-                contentDescription = "Main Activity Header",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1.5f)
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Text(
-                text = stringResource(id = R.string.countries_main_header),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(bottom = 8.dp)
-            )
-            Text(
-                text = stringResource(id = R.string.countries_main_description),
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 1.dp)
-            )
-            Button(
-                onClick = {
-                    // context.startActivity(Intent(context, CountriesActivity::class.java))
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .width(160.dp),
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                Text(text = stringResource(id = R.string.countries_main_button_text), color = MaterialTheme.colorScheme.onPrimary)
-            }
-
-            Spacer(modifier = Modifier.height(48.dp))
-
-            Text(
-                text = stringResource(id = R.string.flights_main_header),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(bottom = 8.dp)
-            )
-            Text(
-                text = stringResource(id = R.string.flights_main_description),
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 1.dp)
-            )
-            Button(
-                onClick = {
-                    // context.startActivity(Intent(context, SearchTicketsActivity::class.java))
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .width(160.dp),
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                Text(text = stringResource(id = R.string.flights_main_button_text), color = MaterialTheme.colorScheme.onPrimary)
-            }
-        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun FlightwiseAppPreview() {
+fun AboutScreenPreview() {
     FlightwiseTheme {
-        FlightwiseApp()
+        AboutScreen()
     }
 }
