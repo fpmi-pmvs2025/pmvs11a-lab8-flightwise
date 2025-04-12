@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
@@ -41,15 +42,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun FlightwiseApp() {
-    // Get the current context from Compose
+
     val context = LocalContext.current
 
-    // Use a state value to manage the dropdown menu's expanded state
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // Top App Bar with a dropdown menu
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -63,7 +62,7 @@ fun FlightwiseApp() {
             ) {
 
                 Text(
-                    text = "Flightwise",
+                    stringResource(id = R.string.app_name),
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.weight(1f)
@@ -99,7 +98,7 @@ fun FlightwiseApp() {
                                 //context.startActivity(Intent(context, ProfileActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Profile", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_profile), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -110,7 +109,7 @@ fun FlightwiseApp() {
                                 //context.startActivity(Intent(context, TicketsActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Tickets", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_tickets), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -121,7 +120,7 @@ fun FlightwiseApp() {
                                 //context.startActivity(Intent(context, CountriesActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Countries", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_countries), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -132,7 +131,7 @@ fun FlightwiseApp() {
                                 context.startActivity(Intent(context, AboutActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("About", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_about), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -143,7 +142,6 @@ fun FlightwiseApp() {
             }
         }
 
-        // Footer
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -153,13 +151,12 @@ fun FlightwiseApp() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "© 2025 Flightwise",
+                text = stringResource(id = R.string.app_copyright),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.labelSmall
             )
         }
 
-        // Main Content
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -180,7 +177,7 @@ fun FlightwiseApp() {
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Discover countries",
+                text = stringResource(id = R.string.countries_main_header),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
@@ -188,7 +185,7 @@ fun FlightwiseApp() {
                     .padding(bottom = 8.dp)
             )
             Text(
-                text = "To choose a ticket, you can firstly discover countries here",
+                text = stringResource(id = R.string.countries_main_description),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
@@ -204,13 +201,13 @@ fun FlightwiseApp() {
                     .width(160.dp),
                 shape = RoundedCornerShape(4.dp)
             ) {
-                Text(text = "Find out more", color = MaterialTheme.colorScheme.onPrimary)
+                Text(text = stringResource(id = R.string.countries_main_button_text), color = MaterialTheme.colorScheme.onPrimary)
             }
 
             Spacer(modifier = Modifier.height(48.dp))
 
             Text(
-                text = "Ready to go",
+                text = stringResource(id = R.string.flights_main_header),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier
@@ -218,7 +215,7 @@ fun FlightwiseApp() {
                     .padding(bottom = 8.dp)
             )
             Text(
-                text = "If you know your choice, you can go ahead and buy a ticket!",
+                text = stringResource(id = R.string.flights_main_description),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.labelSmall,
                 modifier = Modifier
@@ -234,7 +231,7 @@ fun FlightwiseApp() {
                     .width(160.dp),
                 shape = RoundedCornerShape(4.dp)
             ) {
-                Text(text = "Buy a ticket", color = MaterialTheme.colorScheme.onPrimary)
+                Text(text = stringResource(id = R.string.flights_main_button_text), color = MaterialTheme.colorScheme.onPrimary)
             }
         }
     }
