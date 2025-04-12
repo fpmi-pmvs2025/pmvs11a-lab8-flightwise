@@ -15,8 +15,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
 class AboutActivity : ComponentActivity() {
@@ -60,6 +62,7 @@ fun AboutScreen() {
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.weight(1f)
                 )
+
                 Box {
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(
@@ -68,6 +71,7 @@ fun AboutScreen() {
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
+
                     DropdownMenu(
                         expanded = expanded,
                         onDismissRequest = { expanded = false },
@@ -86,9 +90,10 @@ fun AboutScreen() {
 
                         DropdownMenuItem(
                             onClick = {
+                                //context.startActivity(Intent(context, ProfileActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Profile", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_profile), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -96,9 +101,10 @@ fun AboutScreen() {
                         )
                         DropdownMenuItem(
                             onClick = {
+                                //context.startActivity(Intent(context, TicketsActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Tickets", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_tickets), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -106,20 +112,10 @@ fun AboutScreen() {
                         )
                         DropdownMenuItem(
                             onClick = {
+                                //context.startActivity(Intent(context, CountriesActivity::class.java))
                                 expanded = false
                             },
-                            text = { Text("Countries", style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                context.startActivity(Intent(context, AboutActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text("About", style = MaterialTheme.typography.labelMedium) },
+                            text = { Text(stringResource(id = R.string.menu_countries), style = MaterialTheme.typography.labelMedium) },
                             enabled = true,
                             modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
                             colors = themeColors,
@@ -140,12 +136,12 @@ fun AboutScreen() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "This app was created by",
+                text = stringResource(id = R.string.about_creators_text),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.headlineMedium
             )
             Text(
-                text = "Raitsyna Yuliya, Filippov Cyril, Senkevich Stanislau",
+                text = stringResource(id = R.string.team_members),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp)
@@ -161,7 +157,7 @@ fun AboutScreen() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "© 2025 Flightwise",
+                text = stringResource(id = R.string.app_copyright),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.labelSmall
             )
