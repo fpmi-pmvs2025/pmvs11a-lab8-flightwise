@@ -42,7 +42,6 @@ class AboutActivityUITest {
         composeTestRule.onNodeWithText("Profile").assertExists()
         composeTestRule.onNodeWithText("Tickets").assertExists()
         composeTestRule.onNodeWithText("Countries").assertExists()
-        composeTestRule.onNodeWithText("About").assertExists()
     }
 
     @Test

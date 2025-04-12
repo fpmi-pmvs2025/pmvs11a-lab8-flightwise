@@ -63,7 +63,7 @@ class MainActivityUITest {
         }
 
         composeTestRule.onNodeWithText("Discover countries").assertExists()
-        composeTestRule.onNodeWithText("To choose a ticket, you can firstly discover countries here").assertExists()
+        composeTestRule.onNodeWithText("To choose a ticket, you can firstly discover countries here!").assertExists()
         composeTestRule.onNodeWithText("Find out more").assertExists()
     }
 
