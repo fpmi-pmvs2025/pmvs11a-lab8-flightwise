@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.fragments.*
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
