@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
-import by.bsu.flightwise.ui.fragments.HeaderFragment
+import by.bsu.flightwise.ui.fragments.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,22 +51,15 @@ fun FlightwiseApp() {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        HeaderFragment()
-
-        Box(
+        HeaderFragment(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp)
-                .align(Alignment.BottomCenter),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.app_copyright),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
+                .align(Alignment.TopCenter)
+        )
+
+        FooterFragment(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+        )
 
         Column(
             modifier = Modifier
