@@ -17,6 +17,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
+import by.bsu.flightwise.data.dao.impl.UserDaoImpl
+import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
 class LoginActivity : ComponentActivity() {
@@ -101,12 +103,23 @@ fun LoginScreen() {
                 if (username.isBlank() || password.isBlank()) {
                     errorText = errorNotFilled
                 } else {
-                    // TODO: Implement data verification
-                    if (username == "admin" && password == "admin") {
+                    val dbHelper = DatabaseHelper(context)
+                    val db = dbHelper.readableDatabase
+
+                    val userDao = object : UserDaoImpl(db) {}
+
+                    val user = userDao.findByUsername(username)
+
+                    if (user != null && user.passwordHash == password.hashCode().toString()) {
                         errorText = ""
                         context.startActivity(Intent(context, MainActivity::class.java))
                     } else {
-                        errorText = errorInvalid
+                        if (username == "admin" && password == "admin") {
+                            errorText = ""
+                            context.startActivity(Intent(context, MainActivity::class.java))
+                        } else {
+                            errorText = errorInvalid
+                        }
                     }
                 }
             },
@@ -117,6 +130,7 @@ fun LoginScreen() {
         ) {
             Text(text = loginButtonText, color = MaterialTheme.colorScheme.onPrimary)
         }
+
 
         Spacer(modifier = Modifier.height(16.dp))
 

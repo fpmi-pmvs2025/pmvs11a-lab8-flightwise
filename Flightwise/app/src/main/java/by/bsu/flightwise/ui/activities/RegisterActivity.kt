@@ -18,6 +18,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
+import by.bsu.flightwise.data.dao.impl.UserDaoImpl
+import by.bsu.flightwise.data.database.DatabaseHelper
+import by.bsu.flightwise.data.entity.User
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 
 class RegisterActivity : ComponentActivity() {
@@ -45,6 +48,7 @@ fun RegisterScreen() {
 
     val errorNotFilled = stringResource(id = R.string.auth_error_not_filled_inputs)
     val errorPasswordMismatch = stringResource(id = R.string.auth_error_password_mismatch)
+    val errorRegistrationFailed = stringResource(id = R.string.auth_error_registration_failed)
 
     val context = LocalContext.current
 
@@ -117,8 +121,26 @@ fun RegisterScreen() {
                         errorText = errorPasswordMismatch
                     } else {
                         errorText = ""
+
+                        val dbHelper = DatabaseHelper(context)
+                        val db = dbHelper.writableDatabase
+
+                        val userDao = object : UserDaoImpl(db) {}
+
+                        val newUser = User(
+                            username = username,
+                            passwordHash = password.hashCode().toString(),
+                            createdAt = java.util.Date()
+                        )
+                        val insertedId = userDao.insert(newUser)
+
+                        if (insertedId != -1L) {
+                            context.startActivity(Intent(context, LoginActivity::class.java))
+                        } else {
+                            errorText = errorRegistrationFailed
+                        }
                     }
-                    context.startActivity(Intent(context, LoginActivity::class.java))
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
