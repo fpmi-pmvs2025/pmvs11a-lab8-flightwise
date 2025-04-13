@@ -51,6 +51,8 @@
     <string name="error_message_auth_failed">Authentication failed</string>
     <string name="auth_login_text">Login</string>
     <string name="auth_register_text">Register</string>
+    <string name="auth_error_password_mismatch">Passwords do not match.</string>
+    <string name="auth_error_not_filled_inputs">Please fill in all fields.</string>
 
     <string name="about_heading">Flightwise is a ticket-search application</string>
     <string name="about_creators_text">This app was created by</string>
