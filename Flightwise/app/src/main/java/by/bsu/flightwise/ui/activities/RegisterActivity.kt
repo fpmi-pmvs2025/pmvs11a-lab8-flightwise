@@ -22,6 +22,12 @@ import by.bsu.flightwise.data.dao.impl.UserDaoImpl
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.User
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import java.text.SimpleDateFormat
+
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,11 +133,14 @@ fun RegisterScreen() {
 
                         val userDao = object : UserDaoImpl(db) {}
 
+                        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
                         val newUser = User(
                             username = username,
                             passwordHash = password.hashCode().toString(),
-                            createdAt = java.util.Date()
+                            createdAt = Date()
                         )
+
                         val insertedId = userDao.insert(newUser)
 
                         if (insertedId != -1L) {
@@ -157,7 +166,7 @@ fun RegisterScreen() {
                     context.startActivity(Intent(context, LoginActivity::class.java))
                 }
             ) {
-                Text(text = "Already have an account?")
+                Text(text = stringResource(id = R.string.auth_register_to_login))
             }
         }
     }
