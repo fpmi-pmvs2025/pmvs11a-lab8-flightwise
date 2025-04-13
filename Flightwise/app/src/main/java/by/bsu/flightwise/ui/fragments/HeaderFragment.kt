@@ -29,7 +29,9 @@ import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.activities.AboutActivity
 
 @Composable
-fun HeaderFragment() {
+fun HeaderFragment(
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
 
