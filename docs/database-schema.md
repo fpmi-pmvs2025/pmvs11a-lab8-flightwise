@@ -40,16 +40,16 @@
 
 ## Relationships
 
-`Airplanes` -> one to many -> `Flights`
+`Airplanes` -> one to one -> `Flights`
 
-`Airports` -> one to many -> `Flights`
+`Airports` -> one to one -> `Flights`
 
 `Flights` -> one to many -> `Tickets`
 
-`Tickets` -> one to many -> `Payments`
+`Tickets` -> many to one -> `Payments`
 
-`Tickets` -> one to many -> `Passengers`
+`Tickets` -> one to one -> `Passengers`
 
-`Tickets` -> one to many -> `Pricing rules`
+`Tickets` -> many to one -> `Pricing rules`
 
-`Payments` -> one to many -> `Users`
+`Payments` -> many to one -> `Users`
