@@ -133,8 +133,6 @@ fun RegisterScreen() {
 
                         val userDao = object : UserDaoImpl(db) {}
 
-                        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-
                         val newUser = User(
                             username = username,
                             passwordHash = password.hashCode().toString(),
