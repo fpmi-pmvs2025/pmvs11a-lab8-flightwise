@@ -57,6 +57,7 @@
     <string name="auth_error_not_filled_inputs">Заполните все поля</string>
 
 
+    <string name="auth_error_registration_failed">Ошибка регистрации</string>
     <string name="about_heading">Flightwise — это приложение для поиска билетов</string>
     <string name="about_creators_text">Создатели</string>
     <string name="team_members">Райцина Юлия, Филиппов Кирилл, Сенькевич Станислав</string>

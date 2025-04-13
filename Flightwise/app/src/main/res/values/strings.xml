@@ -55,6 +55,7 @@
     <string name="auth_login_to_register">Do not have an account yet?</string>
     <string name="auth_error_password_mismatch">Passwords do not match.</string>
     <string name="auth_error_not_filled_inputs">Please fill in all fields.</string>
+    <string name="auth_error_registration_failed">Registration failed.</string>
 
     <string name="about_heading">Flightwise is a ticket-search application</string>
     <string name="about_creators_text">This app was created by</string>
