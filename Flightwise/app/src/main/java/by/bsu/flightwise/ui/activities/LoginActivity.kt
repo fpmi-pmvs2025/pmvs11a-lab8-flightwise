@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -105,21 +106,20 @@ fun LoginScreen() {
                 } else {
                     val dbHelper = DatabaseHelper(context)
                     val db = dbHelper.readableDatabase
-
                     val userDao = object : UserDaoImpl(db) {}
-
                     val user = userDao.findByUsername(username)
 
-                    if (user != null && user.passwordHash == password.hashCode().toString()) {
+                    if ((user != null && user.passwordHash == password.hashCode().toString()) ||
+                        (username == "admin" && password == "admin")
+                    ) {
                         errorText = ""
+
+                        val preferences = context.getSharedPreferences("Session", Context.MODE_PRIVATE)
+                        preferences.edit().putString("sessionID", username).apply()
+
                         context.startActivity(Intent(context, MainActivity::class.java))
                     } else {
-                        if (username == "admin" && password == "admin") {
-                            errorText = ""
-                            context.startActivity(Intent(context, MainActivity::class.java))
-                        } else {
-                            errorText = errorInvalid
-                        }
+                        errorText = errorInvalid
                     }
                 }
             },
@@ -130,6 +130,7 @@ fun LoginScreen() {
         ) {
             Text(text = loginButtonText, color = MaterialTheme.colorScheme.onPrimary)
         }
+
 
 
         Spacer(modifier = Modifier.height(16.dp))

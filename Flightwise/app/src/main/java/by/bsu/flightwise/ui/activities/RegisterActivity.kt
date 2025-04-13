@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -142,7 +143,10 @@ fun RegisterScreen() {
                         val insertedId = userDao.insert(newUser)
 
                         if (insertedId != -1L) {
-                            context.startActivity(Intent(context, LoginActivity::class.java))
+                            val preferences = context.getSharedPreferences("Session", Context.MODE_PRIVATE)
+                            preferences.edit().putString("sessionID", username).apply()
+
+                            context.startActivity(Intent(context, MainActivity::class.java))
                         } else {
                             errorText = errorRegistrationFailed
                         }
