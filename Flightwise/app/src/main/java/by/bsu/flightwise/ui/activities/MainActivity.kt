@@ -20,8 +20,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import by.bsu.flightwise.ui.fragments.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,113 +51,15 @@ fun FlightwiseApp() {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        Box(
+        HeaderFragment(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp)
                 .align(Alignment.TopCenter)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        )
 
-                Text(
-                    stringResource(id = R.string.app_name),
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.weight(1f)
-                )
-
-                Box {
-                    IconButton(onClick = { expanded = !expanded }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.secondary)
-                            .width(160.dp)
-                    ) {
-                        val themeColors = MenuDefaults.itemColors(
-                            textColor = MaterialTheme.colorScheme.onSecondary,
-                            leadingIconColor = MaterialTheme.colorScheme.secondary,
-                            trailingIconColor = MaterialTheme.colorScheme.tertiary,
-                            disabledTextColor = MaterialTheme.colorScheme.onTertiary,
-                            disabledLeadingIconColor = MaterialTheme.colorScheme.onTertiary,
-                            disabledTrailingIconColor = MaterialTheme.colorScheme.onTertiary
-                        )
-
-                        DropdownMenuItem(
-                            onClick = {
-                                //context.startActivity(Intent(context, ProfileActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text(stringResource(id = R.string.menu_profile), style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                //context.startActivity(Intent(context, TicketsActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text(stringResource(id = R.string.menu_tickets), style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                //context.startActivity(Intent(context, CountriesActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text(stringResource(id = R.string.menu_countries), style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                        DropdownMenuItem(
-                            onClick = {
-                                context.startActivity(Intent(context, AboutActivity::class.java))
-                                expanded = false
-                            },
-                            text = { Text(stringResource(id = R.string.menu_about), style = MaterialTheme.typography.labelMedium) },
-                            enabled = true,
-                            modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
-                            colors = themeColors,
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                        )
-                    }
-                }
-            }
-        }
-
-        Box(
+        FooterFragment(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(16.dp)
-                .align(Alignment.BottomCenter),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = stringResource(id = R.string.app_copyright),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
+                .align(Alignment.BottomCenter)
+        )
 
         Column(
             modifier = Modifier

@@ -25,7 +25,7 @@ abstract class UserDaoImpl(private val db: SQLiteDatabase) : UserDao {
         val values = ContentValues().apply {
             put(COLUMN_USERNAME, user.username)
             put(COLUMN_PASSWORD_HASH, user.passwordHash)
-            put(COLUMN_CREATED_AT, Date().time)
+            put(COLUMN_CREATED_AT, dateFormat.format(Date()))
         }
         return db.insert(TABLE_USERS, null, values)
     }
@@ -117,6 +117,7 @@ abstract class UserDaoImpl(private val db: SQLiteDatabase) : UserDao {
                 createdAt = dateFormat.parse(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CREATED_AT)))!!
             )
         } catch (e: Exception) {
+            println("ERROR!!!" + e)
             null
         }
     }
