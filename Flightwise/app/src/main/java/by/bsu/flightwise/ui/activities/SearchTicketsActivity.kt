@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,6 +18,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
+import by.bsu.flightwise.ui.fragments.FooterFragment
+import by.bsu.flightwise.ui.fragments.HeaderFragment
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,102 +56,114 @@ fun SearchTicketsForm() {
     var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
+    Box(modifier = Modifier.fillMaxSize()) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .padding(top = 80.dp, bottom = 64.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-
-
-        OutlinedTextField(
-            value = from,
-            onValueChange = { from = it },
-            label = { Text("From") },
-            modifier = Modifier.fillMaxWidth()
+        HeaderFragment(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = to,
-            onValueChange = { to = it },
-            label = { Text("To") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        FooterFragment(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+            )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .padding(top = 160.dp, bottom = 64.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+
+
             OutlinedTextField(
-                value = dateOfLeaving,
-                onValueChange = { dateOfLeaving = it },
-                label = { Text("Date of leaving") },
-                modifier = Modifier.weight(1f),
+                value = from,
+                onValueChange = { from = it },
+                label = { Text("From") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = to,
+                onValueChange = { to = it },
+                label = { Text("To") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                OutlinedTextField(
+                    value = dateOfLeaving,
+                    onValueChange = { dateOfLeaving = it },
+                    label = { Text("Date of leaving") },
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                OutlinedTextField(
+                    value = dateOfReturn,
+                    onValueChange = { dateOfReturn = it },
+                    label = { Text("Date of return") },
+                    modifier = Modifier.weight(1f),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            OutlinedTextField(
+                value = numberOfPassengers,
+                onValueChange = { numberOfPassengers = it },
+                label = { Text("Number of passengers") },
+                modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-            OutlinedTextField(
-                value = dateOfReturn,
-                onValueChange = { dateOfReturn = it },
-                label = { Text("Date of return") },
-                modifier = Modifier.weight(1f),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = numberOfPassengers,
-            onValueChange = { numberOfPassengers = it },
-            label = { Text("Number of passengers") },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
 
-        if (errorMessage.isNotEmpty()) {
-            Text(
-                text = errorMessage,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {
-                if (from.isEmpty() || to.isEmpty() || dateOfLeaving.isEmpty() ||
-                    dateOfReturn.isEmpty() || numberOfPassengers.isEmpty()
-                ) {
-                    errorMessage = "All fields are required"
-                } else {
-                    errorMessage = ""
-                    isLoading = true
+            Button(
+                onClick = {
+                    if (from.isEmpty() || to.isEmpty() || dateOfLeaving.isEmpty() ||
+                        dateOfReturn.isEmpty() || numberOfPassengers.isEmpty()
+                    ) {
+                        errorMessage = "All fields are required"
+                    } else {
+                        errorMessage = ""
+                        isLoading = true
 
-                    coroutineScope.launch {
-                        delay(1000)
-                        isLoading = false
+                        coroutineScope.launch {
+                            delay(1000)
+                            isLoading = false
 
-                        //context.startActivity(Intent(context, TicketsActivity::class.java))
+                            //context.startActivity(Intent(context, TicketsActivity::class.java))
+                        }
                     }
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isLoading,
-            shape = MaterialTheme.shapes.medium
-        ) {
-            // Crossfade to animate the button content change.
-            Crossfade(targetState = isLoading) { loading ->
-                if (loading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        strokeWidth = 2.dp
-                    )
-                } else {
-                    Text(text = "Search")
+                },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isLoading,
+                shape = RoundedCornerShape(4.dp)
+            ) {
+                // Crossfade to animate the button content change.
+                Crossfade(targetState = isLoading) { loading ->
+                    if (loading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            strokeWidth = 2.dp
+                        )
+                    } else {
+                        Text(text = "Search")
+                    }
                 }
             }
         }
