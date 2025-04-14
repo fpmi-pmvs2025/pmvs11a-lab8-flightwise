@@ -28,6 +28,7 @@
         <activity android:name=".ui.activities.MainActivity"/>
         <activity android:name=".ui.activities.RegisterActivity"/>
         <activity android:name=".ui.activities.AboutActivity"/>
+        <activity android:name=".ui.activities.SearchTicketsActivity"/>
     </application>
 
 </manifest>
