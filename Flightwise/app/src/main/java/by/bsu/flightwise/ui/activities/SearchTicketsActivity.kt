@@ -154,10 +154,10 @@ fun SearchTicketsForm() {
                         isLoading = true
 
                         coroutineScope.launch {
-                            delay(1000)
+                            delay(3000)
                             isLoading = false
 
-                            //context.startActivity(Intent(context, TicketsActivity::class.java))
+                            context.startActivity(Intent(context, TicketsActivity::class.java))
                         }
                     }
                 },
