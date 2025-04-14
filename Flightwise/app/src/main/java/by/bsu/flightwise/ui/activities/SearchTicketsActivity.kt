@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,6 +30,12 @@ class SearchTicketsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (!isUserAuthorized()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         enableEdgeToEdge()
         setContent {
             FlightwiseTheme {
@@ -40,6 +47,12 @@ class SearchTicketsActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun isUserAuthorized(): Boolean {
+        val preferences = getSharedPreferences("Session", Context.MODE_PRIVATE)
+        val sessionID = preferences.getString("sessionID", null)
+        return !sessionID.isNullOrEmpty()
     }
 }
 
