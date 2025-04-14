@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import DatePickerField
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -110,19 +111,17 @@ fun SearchTicketsForm() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                OutlinedTextField(
-                    value = dateOfLeaving,
-                    onValueChange = { dateOfLeaving = it },
-                    label = { Text("Date of leaving") },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                DatePickerField(
+                    label = "Date of leaving",
+                    selectedDate = dateOfLeaving,
+                    onDateSelected = { dateOfLeaving = it },
+                    modifier = Modifier.weight(1f)
                 )
-                OutlinedTextField(
-                    value = dateOfReturn,
-                    onValueChange = { dateOfReturn = it },
-                    label = { Text("Date of return") },
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                DatePickerField(
+                    label = "Date of return",
+                    selectedDate = dateOfReturn,
+                    onDateSelected = { dateOfReturn = it },
+                    modifier = Modifier.weight(1f)
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -166,12 +165,12 @@ fun SearchTicketsForm() {
                 enabled = !isLoading,
                 shape = RoundedCornerShape(4.dp)
             ) {
-                // Crossfade to animate the button content change.
+
                 Crossfade(targetState = isLoading) { loading ->
                     if (loading) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
-                            color = MaterialTheme.colorScheme.onPrimary,
+                            color = MaterialTheme.colorScheme.primary,
                             strokeWidth = 2.dp
                         )
                     } else {
