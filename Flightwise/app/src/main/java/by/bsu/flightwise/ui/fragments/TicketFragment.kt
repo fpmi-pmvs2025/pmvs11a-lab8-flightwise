@@ -13,7 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import by.bsu.flightwise.R
 import by.bsu.flightwise.data.entity.Ticket
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -27,66 +29,103 @@ fun TicketFragment(ticket: Ticket) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
+            // Upper Part: Departure and Arrival information with horizontal line & plane icon.
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Departure column
+                Column(modifier = Modifier.width(IntrinsicSize.Min)) {
+                    Text(
+                        text = "VLN",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "10:00",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                // Center: horizontal line with airplane icon centered.
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Divider(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.airplane),
+                        contentDescription = "Flight",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                // Arrival column
+                Column(
+                    modifier = Modifier.width(IntrinsicSize.Min),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Text(
+                        text = "MLN",
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "12:00",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Middle Part: Flight info (flight number and plane model)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "AE3458",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Boeing 737",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Bottom Part: Price and luggage mark.
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
                     Text(
-                        text = "VLN - MLN",
+                        text = "\$${ticket.price}",
                         style = MaterialTheme.typography.titleMedium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "10:00 - 12:00",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "AE3458 | Boeing 737",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                // Right column for price details.
-                Column(horizontalAlignment = Alignment.End) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "100\$",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        if (ticket.hasLuggage) {
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Icon(
-                                imageVector = Icons.Filled.Add,
-                                contentDescription = "Luggage Included",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    }
                     Text(
                         text = "Price for 2 passengers",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            val sdf = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Booked: ${sdf.format(ticket.bookedAt)}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = "Status: ${ticket.status}",
-                    style = MaterialTheme.typography.bodySmall
-                )
+                if (ticket.hasLuggage) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.luggage),
+                        contentDescription = "Luggage Included",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
             }
         }
     }
