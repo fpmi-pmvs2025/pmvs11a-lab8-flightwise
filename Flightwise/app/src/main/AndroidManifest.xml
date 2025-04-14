@@ -29,6 +29,7 @@
         <activity android:name=".ui.activities.RegisterActivity"/>
         <activity android:name=".ui.activities.AboutActivity"/>
         <activity android:name=".ui.activities.SearchTicketsActivity"/>
+        <activity android:name=".ui.activities.TicketsActivity"/>
     </application>
 
 </manifest>
