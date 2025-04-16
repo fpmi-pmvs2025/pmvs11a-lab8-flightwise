@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,10 +25,14 @@ import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import by.bsu.flightwise.ui.fragments.*
+import java.io.FileOutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        copyDatabaseIfNeeded(this)
+
         enableEdgeToEdge()
         setContent {
             FlightwiseTheme {
@@ -36,6 +41,19 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     FlightwiseApp()
+                }
+            }
+        }
+    }
+
+    private fun copyDatabaseIfNeeded(context: Context) {
+        val dbName = "flightwise.db"
+        val dbFile = context.getDatabasePath(dbName)
+        if (!dbFile.exists()) {
+            dbFile.parentFile?.mkdirs()
+            context.assets.open(dbName).use { inputStream ->
+                FileOutputStream(dbFile).use { outputStream ->
+                    inputStream.copyTo(outputStream)
                 }
             }
         }
