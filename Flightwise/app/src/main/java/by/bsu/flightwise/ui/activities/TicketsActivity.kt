@@ -1,9 +1,12 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsu.flightwise.data.entity.Flight
@@ -24,9 +28,13 @@ import by.bsu.flightwise.ui.fragments.TicketFragment
 import java.util.Date
 
 class TicketsActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
 
         val flights = intent.getParcelableArrayListExtra<Flight>("flights") ?: arrayListOf()
 
@@ -126,9 +134,23 @@ fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
         )
     }
 
+    val context = LocalContext.current
+
     LazyColumn(contentPadding = PaddingValues(vertical = 8.dp)) {
         items(tickets) { ticket ->
-            TicketFragment(ticket = ticket)
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+                    .clickable {
+                        val intent = Intent(context, TicketActivity::class.java).apply {
+                            putExtra("ticket", ticket)
+                        }
+                        context.startActivity(intent)
+                    }
+            ) {
+                TicketFragment(ticket = ticket)
+            }
         }
     }
 }
