@@ -20,11 +20,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
+import by.bsu.flightwise.data.dao.impl.FlightDaoImpl
+import by.bsu.flightwise.data.database.DatabaseHelper
+import by.bsu.flightwise.service.setupDatabase
 import by.bsu.flightwise.ui.fragments.FooterFragment
 import by.bsu.flightwise.ui.fragments.HeaderFragment
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SearchTicketsActivity : ComponentActivity() {
 
@@ -154,10 +162,41 @@ fun SearchTicketsForm() {
                         isLoading = true
 
                         coroutineScope.launch {
-                            delay(3000)
-                            isLoading = false
+                            try {
+                                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                                val startDate: Date? = sdf.parse(dateOfLeaving)
+                                val endDate: Date? = sdf.parse(dateOfReturn)
 
-                            context.startActivity(Intent(context, TicketsActivity::class.java))
+                                println("Dates: $startDate $endDate")
+
+                                if (startDate == null || endDate == null) {
+                                    errorMessage = "Incorrect date format"
+                                    isLoading = false
+                                    return@launch
+                                }
+
+                                val dbHelper = DatabaseHelper(context)
+                                val db = dbHelper.readableDatabase
+                                val flightDao = FlightDaoImpl(db)
+
+                                val flights_cities = withContext(Dispatchers.IO) {
+                                    flightDao.findByCitiesAndDateRange(from, to, startDate, endDate)
+                                }
+                                val flights_countries = withContext(Dispatchers.IO) {
+                                    flightDao.findByCountriesAndDateRange(from, to, startDate, endDate)
+                                }
+
+                                println("Retrieved flights: $flights_cities, $flights_countries")
+
+                                val intent = Intent(context, TicketsActivity::class.java).apply {
+                                    putExtra("flights", ArrayList(flights_cities + flights_countries))
+                                }
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                println("Error: ${e.message}")
+                            } finally {
+                                isLoading = false
+                            }
                         }
                     }
                 },
