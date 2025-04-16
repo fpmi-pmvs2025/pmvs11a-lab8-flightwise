@@ -106,6 +106,10 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
         endDate: Date
     ): List<Flight> {
         val flights = mutableListOf<Flight>()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val startDateStr = dateFormat.format(startDate)
+        val endDateStr = dateFormat.format(endDate)
+
         val query = """
         SELECT f.*
         FROM $TABLE_FLIGHTS f
@@ -120,8 +124,8 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
             arrayOf(
                 departureCity,
                 arrivalCity,
-                startDate.time.toString(),
-                endDate.time.toString()
+                startDateStr,
+                endDateStr
             )
         )
 
@@ -133,6 +137,7 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
         return flights
     }
 
+
     override fun findByCountriesAndDateRange(
         departureCountry: String,
         arrivalCountry: String,
@@ -140,6 +145,11 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
         endDate: Date
     ): List<Flight> {
         val flights = mutableListOf<Flight>()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val startDateStr = dateFormat.format(startDate)
+        val endDateStr = dateFormat.format(endDate)
+
+
         val query = """
         SELECT f.*
         FROM $TABLE_FLIGHTS f
@@ -154,8 +164,8 @@ class FlightDaoImpl(private val db: SQLiteDatabase) : FlightDao {
             arrayOf(
                 departureCountry,
                 arrivalCountry,
-                startDate.time.toString(),
-                endDate.time.toString()
+                startDateStr,
+                endDateStr
             )
         )
 
