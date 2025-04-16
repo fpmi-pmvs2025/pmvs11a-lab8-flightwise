@@ -1,27 +1,73 @@
 package by.bsu.flightwise.ui.fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
+import by.bsu.flightwise.data.dao.impl.AirplaneDaoImpl
+import by.bsu.flightwise.data.dao.impl.AirportDaoImpl
+import by.bsu.flightwise.data.dao.impl.FlightDaoImpl
+import by.bsu.flightwise.data.database.DatabaseHelper
+import by.bsu.flightwise.data.entity.Airplane
+import by.bsu.flightwise.data.entity.Airport
+import by.bsu.flightwise.data.entity.Flight
 import by.bsu.flightwise.data.entity.Ticket
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
 fun TicketFragment(ticket: Ticket) {
+    val context = LocalContext.current
+
+    var flight by remember { mutableStateOf<Flight?>(null) }
+    var airplane by remember { mutableStateOf<Airplane?>(null) }
+    var departureAirport by remember { mutableStateOf<Airport?>(null) }
+    var arrivalAirport by remember { mutableStateOf<Airport?>(null) }
+
+    LaunchedEffect(ticket.flightId) {
+        withContext(Dispatchers.IO) {
+            try {
+                val dbHelper = DatabaseHelper(context)
+                val db = dbHelper.readableDatabase
+
+                val flightDao = FlightDaoImpl(db)
+                flight = flightDao.getById(ticket.flightId)
+
+                flight?.let { f ->
+                    val airplaneDao = AirplaneDaoImpl(db)
+                    airplane = airplaneDao.getById(f.airplaneId)
+                    val airportDao = AirportDaoImpl(db)
+                    departureAirport = airportDao.getById(f.fromAirportId)
+                    arrivalAirport = airportDao.getById(f.toAirportId)
+                }
+                db.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    if (flight == null || airplane == null || departureAirport == null || arrivalAirport == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+    val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,24 +75,21 @@ fun TicketFragment(ticket: Ticket) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Column(modifier = Modifier.width(IntrinsicSize.Min)) {
                     Text(
-                        text = "VLN",
+                        text = departureAirport!!.code,
                         style = MaterialTheme.typography.titleLarge
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "10:00",
+                        text = timeFormatter.format(flight!!.departureTime),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -64,18 +107,17 @@ fun TicketFragment(ticket: Ticket) {
                         modifier = Modifier.size(24.dp)
                     )
                 }
-
                 Column(
                     modifier = Modifier.width(IntrinsicSize.Min),
                     horizontalAlignment = Alignment.End
                 ) {
                     Text(
-                        text = "MLN",
+                        text = arrivalAirport!!.code,
                         style = MaterialTheme.typography.titleLarge
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "12:00",
+                        text = timeFormatter.format(flight!!.arrivalTime),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -88,12 +130,12 @@ fun TicketFragment(ticket: Ticket) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "AE3458",
+                    text = "Flight No: ${flight!!.id}",
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "Boeing 737",
+                    text = "Airplane: ${airplane!!.model}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -112,7 +154,7 @@ fun TicketFragment(ticket: Ticket) {
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Price for 2 passengers",
+                        text = "Price for ticket",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
