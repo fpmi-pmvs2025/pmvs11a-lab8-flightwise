@@ -186,8 +186,6 @@ fun SearchTicketsForm() {
                                     flightDao.findByCountriesAndDateRange(from, to, startDate, endDate)
                                 }
 
-                                println("Retrieved flights: $flights_cities, $flights_countries")
-
                                 val intent = Intent(context, TicketsActivity::class.java).apply {
                                     putExtra("flights", ArrayList(flights_cities + flights_countries))
                                 }
