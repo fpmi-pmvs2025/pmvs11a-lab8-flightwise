@@ -30,6 +30,7 @@
         <activity android:name=".ui.activities.AboutActivity"/>
         <activity android:name=".ui.activities.SearchTicketsActivity"/>
         <activity android:name=".ui.activities.TicketsActivity"/>
+        <activity android:name=".ui.activities.TicketActivity"/>
     </application>
 
 </manifest>
