@@ -29,12 +29,12 @@ fun TicketFragment(ticket: Ticket) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            // Upper Part: Departure and Arrival information with horizontal line & plane icon.
+            
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Departure column
+
                 Column(modifier = Modifier.width(IntrinsicSize.Min)) {
                     Text(
                         text = "VLN",
@@ -46,7 +46,7 @@ fun TicketFragment(ticket: Ticket) {
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
-                // Center: horizontal line with airplane icon centered.
+
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -64,7 +64,7 @@ fun TicketFragment(ticket: Ticket) {
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                // Arrival column
+
                 Column(
                     modifier = Modifier.width(IntrinsicSize.Min),
                     horizontalAlignment = Alignment.End
@@ -83,7 +83,6 @@ fun TicketFragment(ticket: Ticket) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Middle Part: Flight info (flight number and plane model)
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -101,7 +100,6 @@ fun TicketFragment(ticket: Ticket) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Bottom Part: Price and luggage mark.
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
