@@ -23,6 +23,7 @@ import by.bsu.flightwise.data.dao.impl.UserDaoImpl
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.User
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 
 import java.util.Calendar
@@ -33,6 +34,7 @@ import java.util.TimeZone
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             FlightwiseTheme {
                 Surface(

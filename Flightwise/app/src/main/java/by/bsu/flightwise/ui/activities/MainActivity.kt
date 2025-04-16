@@ -31,8 +31,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        copyDatabaseIfNeeded(this)
-
         enableEdgeToEdge()
         setContent {
             FlightwiseTheme {
@@ -41,19 +39,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     FlightwiseApp()
-                }
-            }
-        }
-    }
-
-    private fun copyDatabaseIfNeeded(context: Context) {
-        val dbName = "flightwise.db"
-        val dbFile = context.getDatabasePath(dbName)
-        if (!dbFile.exists()) {
-            dbFile.parentFile?.mkdirs()
-            context.assets.open(dbName).use { inputStream ->
-                FileOutputStream(dbFile).use { outputStream ->
-                    inputStream.copyTo(outputStream)
                 }
             }
         }
