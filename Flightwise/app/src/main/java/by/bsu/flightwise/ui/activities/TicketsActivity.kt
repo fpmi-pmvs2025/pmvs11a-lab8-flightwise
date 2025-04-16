@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import by.bsu.flightwise.data.entity.Flight
+import by.bsu.flightwise.data.entity.PricingRule
 import by.bsu.flightwise.data.entity.Ticket
 import by.bsu.flightwise.data.entity.TicketStatus
 import by.bsu.flightwise.ui.fragments.FooterFragment
@@ -89,13 +90,36 @@ fun TicketsScreen(flights: List<Flight>) {
 @Composable
 fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
 
+    fun getLuggageFeePercentage(pricingRuleId: Long): Float {
+        return when (pricingRuleId) {
+            1L -> 0.1f
+            2L -> 0.15f
+            3L -> 0.05f
+            4L -> 0.2f
+            5L -> 0.25f
+            6L -> 0.08f
+            7L -> 0.12f
+            8L -> 0.18f
+            9L -> 0.2f
+            10L -> 0.3f
+            11L -> 0.1f
+            12L -> 0.25f
+            else -> 0.1f
+        }
+    }
+    val basePrice = 100.0f
+
     val tickets = flights.map { flight ->
+        val feePercentage = getLuggageFeePercentage(flight.pricingRuleId)
+        val luggageFee = if (withLuggage) basePrice * feePercentage else 0.0f
+        val finalPrice = (basePrice + luggageFee) * ( 1.0f + feePercentage )
+
         Ticket(
             id = flight.id,
             passengerId = 100L,
             paymentId = null,
             flightId = flight.id,
-            price = if (withLuggage) 150.0f else 100.0f,
+            price = finalPrice,
             hasLuggage = withLuggage,
             bookedAt = flight.departureTime,
             status = if (withLuggage) TicketStatus.BOOKED else TicketStatus.PENDING
@@ -108,3 +132,5 @@ fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
         }
     }
 }
+
+
