@@ -31,6 +31,7 @@
         <activity android:name=".ui.activities.SearchTicketsActivity"/>
         <activity android:name=".ui.activities.TicketsActivity"/>
         <activity android:name=".ui.activities.TicketActivity"/>
+        <activity android:name=".ui.activities.PaymentActivity"/>
     </application>
 
 </manifest>
