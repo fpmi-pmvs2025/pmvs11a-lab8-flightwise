@@ -5,3 +5,6 @@
 ![main page](presentation/main.png)
 ![auth pages](presentation/auth.png)
 ![about](presentation/about.png)
+![search](presentation/search.png)
+![flights](presentation/flights.png)
+![ticket](presentation/ticket.png)
