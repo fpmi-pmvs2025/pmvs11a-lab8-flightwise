@@ -8,3 +8,4 @@
 ![search](presentation/search.png)
 ![flights](presentation/flights.png)
 ![ticket](presentation/ticket.png)
+![payment](presentation/payment.png)
