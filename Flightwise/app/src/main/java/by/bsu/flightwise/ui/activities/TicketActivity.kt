@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.data.entity.Ticket
@@ -45,6 +47,8 @@ fun TicketScreen(ticket: Ticket?) {
     val passengers = remember { mutableStateListOf<Passenger>() }
 
     Box(modifier = Modifier.fillMaxSize()) {
+
+        val context = LocalContext.current
 
         HeaderFragment(
             modifier = Modifier.align(Alignment.TopCenter)
@@ -94,7 +98,14 @@ fun TicketScreen(ticket: Ticket?) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { println("continue pressed") },
+                onClick = {
+                    val passengersList = ArrayList(passengers)
+
+                    val intent = Intent(context, PaymentActivity::class.java).apply {
+                        putParcelableArrayListExtra("passengers", passengersList)
+                    }
+                    context.startActivity(intent)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),
