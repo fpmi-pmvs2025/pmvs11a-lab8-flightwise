@@ -98,8 +98,6 @@ fun SearchTicketsForm() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-
-
             OutlinedTextField(
                 value = from,
                 onValueChange = { from = it },

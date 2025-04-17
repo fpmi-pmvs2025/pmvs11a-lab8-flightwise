@@ -5,21 +5,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import by.bsu.flightwise.R
 import by.bsu.flightwise.data.entity.Ticket
+import by.bsu.flightwise.data.entity.Passenger
 import by.bsu.flightwise.ui.fragments.FooterFragment
 import by.bsu.flightwise.ui.fragments.HeaderFragment
 import by.bsu.flightwise.ui.fragments.TicketFragment
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TicketActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,8 @@ class TicketActivity : ComponentActivity() {
 
 @Composable
 fun TicketScreen(ticket: Ticket?) {
-    var passengerCount by remember { mutableStateOf(1) }
+    var showDialog by remember { mutableStateOf(false) }
+    val passengers = remember { mutableStateListOf<Passenger>() }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -74,21 +74,21 @@ fun TicketScreen(ticket: Ticket?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Column(modifier = Modifier.fillMaxWidth()) {
-                repeat(passengerCount) { index ->
-                    PassengerFragment(passengerNumber = index + 1)
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Button(
-                    onClick = { passengerCount++ },
-                    modifier = Modifier.width(160.dp),
-                    shape = RoundedCornerShape(4.dp)
-                ) {
-                    Text(
-                        text = "Add Passenger",
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
+            passengers.forEachIndexed { index, passenger ->
+                PassengerFragment(passengerNumber = index + 1, passenger = passenger)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = { showDialog = true },
+                modifier = Modifier.width(160.dp),
+                shape = RoundedCornerShape(4.dp)
+            ) {
+                Text(
+                    text = "Add Passenger",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -103,11 +103,21 @@ fun TicketScreen(ticket: Ticket?) {
                 Text(text = "Continue", style = MaterialTheme.typography.bodyLarge)
             }
         }
+
+        if (showDialog) {
+            AddPassengerDialog(
+                onDismiss = { showDialog = false },
+                onAdd = { newPassenger ->
+                    passengers.add(newPassenger)
+                    showDialog = false
+                }
+            )
+        }
     }
 }
 
 @Composable
-fun PassengerFragment(passengerNumber: Int) {
+fun PassengerFragment(passengerNumber: Int, passenger: Passenger) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,8 +132,93 @@ fun PassengerFragment(passengerNumber: Int) {
                 text = "Passenger $passengerNumber",
                 style = MaterialTheme.typography.titleSmall
             )
+            Text(text = "Name: ${passenger.name}", style = MaterialTheme.typography.bodyMedium)
+            Text(text = "Surname: ${passenger.surname}", style = MaterialTheme.typography.bodyMedium)
+            Text(text = "Passport: ${passenger.passportNumber}", style = MaterialTheme.typography.bodyMedium)
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            Text(text = "Birth Date: ${dateFormat.format(passenger.birthDate)}", style = MaterialTheme.typography.bodyMedium)
         }
     }
+}
+
+@Composable
+fun AddPassengerDialog(
+    onDismiss: () -> Unit,
+    onAdd: (Passenger) -> Unit
+) {
+    var name by remember { mutableStateOf("") }
+    var surname by remember { mutableStateOf("") }
+    var passportNumber by remember { mutableStateOf("") }
+    var birthDateText by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = "Add Passenger")
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = surname,
+                    onValueChange = { surname = it },
+                    label = { Text("Surname") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = passportNumber,
+                    onValueChange = { passportNumber = it },
+                    label = { Text("Passport Number") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = birthDateText,
+                    onValueChange = { birthDateText = it },
+                    label = { Text("Birth Date (dd/MM/yyyy)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val parsedDate: Date? = try {
+                        dateFormat.parse(birthDateText)
+                    } catch (e: Exception) {
+                        null
+                    }
+                    if (name.isNotBlank() && surname.isNotBlank() && passportNumber.isNotBlank() && parsedDate != null) {
+                        onAdd(
+                            Passenger(
+                                name = name,
+                                surname = surname,
+                                passportNumber = passportNumber,
+                                birthDate = parsedDate
+                            )
+                        )
+                    }
+                }
+            ) {
+                Text("Add")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Preview(showBackground = true)
