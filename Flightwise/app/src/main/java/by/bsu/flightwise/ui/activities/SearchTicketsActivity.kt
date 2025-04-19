@@ -16,18 +16,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
 import by.bsu.flightwise.data.dao.impl.FlightDaoImpl
 import by.bsu.flightwise.data.database.DatabaseHelper
-import by.bsu.flightwise.service.setupDatabase
 import by.bsu.flightwise.ui.fragments.FooterFragment
 import by.bsu.flightwise.ui.fragments.HeaderFragment
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -81,14 +80,12 @@ fun SearchTicketsForm() {
     Box(modifier = Modifier.fillMaxSize()) {
 
         HeaderFragment(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter)
         )
 
         FooterFragment(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-            )
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
 
         Column(
             modifier = Modifier
@@ -97,18 +94,17 @@ fun SearchTicketsForm() {
                 .padding(top = 160.dp, bottom = 64.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             OutlinedTextField(
                 value = from,
                 onValueChange = { from = it },
-                label = { Text("From") },
+                label = { Text(text = stringResource(id = R.string.flights_from_placeholder)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(
                 value = to,
                 onValueChange = { to = it },
-                label = { Text("To") },
+                label = { Text(text = stringResource(id = R.string.flights_to_placeholder)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -118,13 +114,13 @@ fun SearchTicketsForm() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 DatePickerField(
-                    label = "Date of leaving",
+                    label = stringResource(id = R.string.flights_leave_date_placeholder),
                     selectedDate = dateOfLeaving,
                     onDateSelected = { dateOfLeaving = it },
                     modifier = Modifier.weight(1f)
                 )
                 DatePickerField(
-                    label = "Date of return",
+                    label = stringResource(id = R.string.flights_return_date_placeholder),
                     selectedDate = dateOfReturn,
                     onDateSelected = { dateOfReturn = it },
                     modifier = Modifier.weight(1f)
@@ -134,7 +130,7 @@ fun SearchTicketsForm() {
             OutlinedTextField(
                 value = numberOfPassengers,
                 onValueChange = { numberOfPassengers = it },
-                label = { Text("Number of passengers") },
+                label = { Text(text = stringResource(id = R.string.flights_passengers_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -154,7 +150,7 @@ fun SearchTicketsForm() {
                     if (from.isEmpty() || to.isEmpty() || dateOfLeaving.isEmpty() ||
                         dateOfReturn.isEmpty() || numberOfPassengers.isEmpty()
                     ) {
-                        errorMessage = "All fields are required"
+                        errorMessage = stringResource(id = R.string.error_all_fields_required)
                     } else {
                         errorMessage = ""
                         isLoading = true
@@ -168,7 +164,7 @@ fun SearchTicketsForm() {
                                 println("Dates: $startDate $endDate")
 
                                 if (startDate == null || endDate == null) {
-                                    errorMessage = "Incorrect date format"
+                                    errorMessage = stringResource(id = R.string.error_incorrect_date_format)
                                     isLoading = false
                                     return@launch
                                 }
@@ -177,15 +173,15 @@ fun SearchTicketsForm() {
                                 val db = dbHelper.readableDatabase
                                 val flightDao = FlightDaoImpl(db)
 
-                                val flights_cities = withContext(Dispatchers.IO) {
+                                val flightsCities = withContext(Dispatchers.IO) {
                                     flightDao.findByCitiesAndDateRange(from, to, startDate, endDate)
                                 }
-                                val flights_countries = withContext(Dispatchers.IO) {
+                                val flightsCountries = withContext(Dispatchers.IO) {
                                     flightDao.findByCountriesAndDateRange(from, to, startDate, endDate)
                                 }
 
                                 val intent = Intent(context, TicketsActivity::class.java).apply {
-                                    putExtra("flights", ArrayList(flights_cities + flights_countries))
+                                    putExtra("flights", ArrayList(flightsCities + flightsCountries))
                                 }
                                 context.startActivity(intent)
                             } catch (e: Exception) {
@@ -200,7 +196,6 @@ fun SearchTicketsForm() {
                 enabled = !isLoading,
                 shape = RoundedCornerShape(4.dp)
             ) {
-
                 Crossfade(targetState = isLoading) { loading ->
                     if (loading) {
                         CircularProgressIndicator(
@@ -209,7 +204,7 @@ fun SearchTicketsForm() {
                             strokeWidth = 2.dp
                         )
                     } else {
-                        Text(text = "Search")
+                        Text(text = stringResource(id = R.string.search_button_text))
                     }
                 }
             }
