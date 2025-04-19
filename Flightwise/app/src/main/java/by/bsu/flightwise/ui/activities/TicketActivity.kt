@@ -11,8 +11,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import by.bsu.flightwise.R
 import by.bsu.flightwise.data.entity.Ticket
 import by.bsu.flightwise.data.entity.Passenger
 import by.bsu.flightwise.ui.fragments.FooterFragment
@@ -45,10 +47,9 @@ class TicketActivity : ComponentActivity() {
 fun TicketScreen(ticket: Ticket?) {
     var showDialog by remember { mutableStateOf(false) }
     val passengers = remember { mutableStateListOf<Passenger>() }
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize()) {
-
-        val context = LocalContext.current
 
         HeaderFragment(
             modifier = Modifier.align(Alignment.TopCenter)
@@ -70,7 +71,7 @@ fun TicketScreen(ticket: Ticket?) {
                 TicketFragment(ticket = ticket)
             } else {
                 Text(
-                    text = "Ticket not found.",
+                    text = stringResource(id = R.string.ticket_not_found),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(16.dp)
                 )
@@ -78,6 +79,7 @@ fun TicketScreen(ticket: Ticket?) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Вывод списка пассажиров
             passengers.forEachIndexed { index, passenger ->
                 PassengerFragment(passengerNumber = index + 1, passenger = passenger)
             }
@@ -90,7 +92,7 @@ fun TicketScreen(ticket: Ticket?) {
                 shape = RoundedCornerShape(4.dp)
             ) {
                 Text(
-                    text = "Add Passenger",
+                    text = stringResource(id = R.string.add_button_text),
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -100,7 +102,6 @@ fun TicketScreen(ticket: Ticket?) {
             Button(
                 onClick = {
                     val passengersList = ArrayList(passengers)
-
                     val intent = Intent(context, PaymentActivity::class.java).apply {
                         putParcelableArrayListExtra("passengers", passengersList)
                         putExtra("ticket", ticket)
@@ -112,7 +113,10 @@ fun TicketScreen(ticket: Ticket?) {
                     .height(48.dp),
                 shape = RoundedCornerShape(4.dp)
             ) {
-                Text(text = "Continue", style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    text = stringResource(id = R.string.continue_button_text),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         }
 
@@ -162,11 +166,12 @@ fun AddPassengerDialog(
     var surname by remember { mutableStateOf("") }
     var passportNumber by remember { mutableStateOf("") }
     var birthDateText by remember { mutableStateOf("") }
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(text = "Add Passenger")
+            Text(text = stringResource(id = R.string.add_button_text))
         },
         text = {
             Column(
@@ -175,28 +180,28 @@ fun AddPassengerDialog(
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(text = stringResource(id = R.string.name_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = surname,
                     onValueChange = { surname = it },
-                    label = { Text("Surname") },
+                    label = { Text(text = stringResource(id = R.string.surname_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = passportNumber,
                     onValueChange = { passportNumber = it },
-                    label = { Text("Passport Number") },
+                    label = { Text(text = stringResource(id = R.string.passport_number_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = birthDateText,
                     onValueChange = { birthDateText = it },
-                    label = { Text("Birth Date (dd/MM/yyyy)") },
+                    label = { Text(text = stringResource(id = R.string.birth_date_placeholder)) },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -204,7 +209,6 @@ fun AddPassengerDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                     val parsedDate: Date? = try {
                         dateFormat.parse(birthDateText)
                     } catch (e: Exception) {
@@ -222,12 +226,12 @@ fun AddPassengerDialog(
                     }
                 }
             ) {
-                Text("Add")
+                Text(text = stringResource(id = R.string.add_button_text))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(text = stringResource(id = R.string.cancel_button_text))
             }
         }
     )
@@ -240,3 +244,4 @@ fun TicketScreenPreview() {
         TicketScreen(ticket = null)
     }
 }
+
