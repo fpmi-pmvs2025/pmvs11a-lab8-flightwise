@@ -63,4 +63,7 @@
     <string name="about_heading">Flightwise is a ticket-search application</string>
     <string name="about_creators_text">This app was created by</string>
     <string name="team_members">Raitsyna Yuliya, Filippov Cyril, Senkevich Stanislau</string>
+
+    <string name="ticket_not_found">Ticket not found.</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>

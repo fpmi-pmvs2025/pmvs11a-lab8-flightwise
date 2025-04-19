@@ -63,4 +63,7 @@
     <string name="about_creators_text">Создатели</string>
     <string name="team_members">Райцина Юлия, Филиппов Кирилл, Сенькевич Станислав</string>
     <string name="error_all_fields_required">Все поля должны быть заполнены</string>
+
+    <string name="ticket_not_found">Билет не найден.</string>
+    <string name="cancel_button_text">Отменить</string>
 </resources>
