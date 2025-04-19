@@ -77,6 +77,9 @@ fun SearchTicketsForm() {
     var errorMessage by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
+    val error_all_fields_required = stringResource(id = R.string.error_all_fields_required)
+    val error_incorrect_date_format = stringResource(id = R.string.error_incorrect_date_format)
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         HeaderFragment(
@@ -150,7 +153,7 @@ fun SearchTicketsForm() {
                     if (from.isEmpty() || to.isEmpty() || dateOfLeaving.isEmpty() ||
                         dateOfReturn.isEmpty() || numberOfPassengers.isEmpty()
                     ) {
-                        errorMessage = stringResource(id = R.string.error_all_fields_required)
+                        errorMessage = error_all_fields_required
                     } else {
                         errorMessage = ""
                         isLoading = true
@@ -164,7 +167,7 @@ fun SearchTicketsForm() {
                                 println("Dates: $startDate $endDate")
 
                                 if (startDate == null || endDate == null) {
-                                    errorMessage = stringResource(id = R.string.error_incorrect_date_format)
+                                    errorMessage = error_incorrect_date_format
                                     isLoading = false
                                     return@launch
                                 }
