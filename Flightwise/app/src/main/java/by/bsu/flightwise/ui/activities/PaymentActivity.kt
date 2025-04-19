@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import by.bsu.flightwise.R
 import by.bsu.flightwise.data.dao.impl.PassengerDaoImpl
 import by.bsu.flightwise.data.dao.impl.TicketDaoImpl
 import by.bsu.flightwise.data.database.DatabaseHelper
@@ -46,19 +48,16 @@ class PaymentActivity : ComponentActivity() {
 
 @Composable
 fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        val context = LocalContext.current
-
         HeaderFragment(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter)
         )
 
         FooterFragment(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
 
         Column(
@@ -72,7 +71,7 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Choose payment",
+                text = stringResource(id = R.string.payment_header),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(start = 16.dp),
                 color = Color.Black
@@ -89,7 +88,6 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
 
                     passengers?.forEach { passenger ->
                         val insertedPassengerId = passengerDao.insert(passenger)
-
                         ticket?.let { t ->
                             val ticketToInsert = t.copy(passengerId = insertedPassengerId)
                             ticketDao.insert(ticketToInsert)
@@ -112,7 +110,7 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
                     contentColor = Color.White
                 )
             ) {
-                Text(text = "Paypal")
+                Text(text = stringResource(id = R.string.payment_paypal))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -135,7 +133,7 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
                     contentColor = Color.White
                 )
             ) {
-                Text(text = "Card")
+                Text(text = stringResource(id = R.string.payment_card))
             }
         }
     }
@@ -145,6 +143,6 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
 @Composable
 fun PaymentScreenPreview() {
     FlightwiseTheme {
-        PaymentScreen(null, null)
+        PaymentScreen(ticket = null, passengers = null)
     }
 }
