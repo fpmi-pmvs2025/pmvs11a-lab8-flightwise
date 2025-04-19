@@ -1,7 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
 import android.content.Intent
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,26 +14,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import by.bsu.flightwise.R
 import by.bsu.flightwise.data.entity.Flight
-import by.bsu.flightwise.data.entity.PricingRule
 import by.bsu.flightwise.data.entity.Ticket
 import by.bsu.flightwise.data.entity.TicketStatus
 import by.bsu.flightwise.ui.fragments.FooterFragment
 import by.bsu.flightwise.ui.fragments.HeaderFragment
-import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import by.bsu.flightwise.ui.fragments.TicketFragment
+import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import java.util.Date
 
 class TicketsActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-
 
         val flights = intent.getParcelableArrayListExtra<Flight>("flights") ?: arrayListOf()
 
@@ -59,13 +56,11 @@ fun TicketsScreen(flights: List<Flight>) {
     Box(modifier = Modifier.fillMaxSize()) {
 
         HeaderFragment(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter)
         )
 
         FooterFragment(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
 
         Column(
@@ -86,7 +81,7 @@ fun TicketsScreen(flights: List<Flight>) {
                         checked = withLuggage,
                         onCheckedChange = { withLuggage = it }
                     )
-                    Text(text = "With luggage")
+                    Text(text = stringResource(id = R.string.luggage_checkbox_text))
                 }
 
                 TicketList(withLuggage = withLuggage, flights = flights)
@@ -120,7 +115,7 @@ fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
     val tickets = flights.map { flight ->
         val feePercentage = getLuggageFeePercentage(flight.pricingRuleId)
         val luggageFee = if (withLuggage) basePrice * feePercentage else 0.0f
-        val finalPrice = (basePrice + luggageFee) * ( 1.0f + feePercentage )
+        val finalPrice = (basePrice + luggageFee) * (1.0f + feePercentage)
 
         Ticket(
             id = flight.id,
@@ -155,4 +150,10 @@ fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
     }
 }
 
-
+@Preview(showBackground = true)
+@Composable
+fun TicketsScreenPreview() {
+    FlightwiseTheme {
+        TicketsScreen(flights = emptyList())
+    }
+}
