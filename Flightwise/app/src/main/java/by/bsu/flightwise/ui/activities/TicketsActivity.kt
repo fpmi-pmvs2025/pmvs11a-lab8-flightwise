@@ -125,7 +125,7 @@ fun TicketList(withLuggage: Boolean, flights: List<Flight>) {
             price = finalPrice,
             hasLuggage = withLuggage,
             bookedAt = flight.departureTime,
-            status = if (withLuggage) TicketStatus.BOOKED else TicketStatus.PENDING
+            status = TicketStatus.PENDING
         )
     }
 
