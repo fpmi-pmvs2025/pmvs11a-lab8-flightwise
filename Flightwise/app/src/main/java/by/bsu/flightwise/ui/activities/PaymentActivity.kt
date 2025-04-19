@@ -15,6 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import by.bsu.flightwise.data.dao.impl.PassengerDaoImpl
+import by.bsu.flightwise.data.dao.impl.TicketDaoImpl
+import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Passenger
 import by.bsu.flightwise.data.entity.Ticket
 import by.bsu.flightwise.ui.fragments.FooterFragment
@@ -79,6 +82,20 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
 
             Button(
                 onClick = {
+                    val dbHelper = DatabaseHelper(context)
+                    val db = dbHelper.writableDatabase
+                    val passengerDao = PassengerDaoImpl(db)
+                    val ticketDao = TicketDaoImpl(db)
+
+                    passengers?.forEach { passenger ->
+                        val insertedPassengerId = passengerDao.insert(passenger)
+
+                        ticket?.let { t ->
+                            val ticketToInsert = t.copy(passengerId = insertedPassengerId)
+                            ticketDao.insert(ticketToInsert)
+                        }
+                    }
+
                     val youtubeIntent = Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("https://youtu.be/dQw4w9WgXcQ?si=U0d2p_CD8-mOiVfg")
