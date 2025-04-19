@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Flightwise Docs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <style>
+    :root {
+        --theme-color:#2A3BFF;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 10px;
+      background-color: #fff;
+      color: rgb(0, 0, 0);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.243);
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    #app {
+      padding-top: 80px;
+    }
+
+    .sidebar {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Flightwise</h1>
+    <img src="images/logo.png" alt="Logo"/>
+  </header>
+
+  <div id="app">Loading...</div>
+
+  <script>
+    window.$docsify = {
+      loadSidebar: true,
+      homepage: 'index.md',
+    };
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+</body>
+</html>
