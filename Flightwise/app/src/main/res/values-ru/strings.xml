@@ -28,6 +28,7 @@
     <string name="error_message_data_wrong">Пожалуйста, проверьте введённые данные</string>
     <string name="luggage_checkbox_text">С багажом</string>
 
+    <string name="error_incorrect_date_format">Неверный формат даты</string>
     <string name="flight_price_for_passengers">Цена для %d пассажиров</string>
     <string name="flight_price_for_passenger">Цена для %d пассажирора</string>
 
@@ -61,4 +62,8 @@
     <string name="about_heading">Flightwise — это приложение для поиска билетов</string>
     <string name="about_creators_text">Создатели</string>
     <string name="team_members">Райцина Юлия, Филиппов Кирилл, Сенькевич Станислав</string>
+    <string name="error_all_fields_required">Все поля должны быть заполнены</string>
+
+    <string name="ticket_not_found">Билет не найден.</string>
+    <string name="cancel_button_text">Отменить</string>
 </resources>

@@ -27,6 +27,7 @@ import androidx.compose.runtime.*
 
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.activities.AboutActivity
+import by.bsu.flightwise.ui.activities.SearchTicketsActivity
 
 @Composable
 fun HeaderFragment(
@@ -91,7 +92,7 @@ fun HeaderFragment(
                     )
                     DropdownMenuItem(
                         onClick = {
-                            //context.startActivity(Intent(context, TicketsActivity::class.java))
+                            context.startActivity(Intent(context, SearchTicketsActivity::class.java))
                             expanded = false
                         },
                         text = { Text(stringResource(id = R.string.menu_tickets), style = MaterialTheme.typography.labelMedium) },
