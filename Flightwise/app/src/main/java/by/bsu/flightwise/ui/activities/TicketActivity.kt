@@ -103,6 +103,7 @@ fun TicketScreen(ticket: Ticket?) {
 
                     val intent = Intent(context, PaymentActivity::class.java).apply {
                         putParcelableArrayListExtra("passengers", passengersList)
+                        putExtra("ticket", ticket)
                     }
                     context.startActivity(intent)
                 },
