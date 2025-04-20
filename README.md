@@ -6,7 +6,7 @@
 The application provides facilities for searching destination country and buying tickets to flights. It allows the user to find necessary tickets that match their preferences in luggage, dates and price.
 
 ## Installation
-Install [apk]() on your Android device.
+Install [apk](https://github.com/fpmi-pmvs2025/pmvs11a-lab8-flightwise/actions/runs/14563997052/artifacts/2976776631) on your Android device.
 
 ## Usage
 1) Login or register first
