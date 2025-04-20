@@ -135,6 +135,14 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
     }
 
     private fun cursorToTicket(cursor: Cursor): Ticket {
+        val dateString = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOKED_AT))
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val bookedAtDate = try {
+            sdf.parse(dateString) ?: Date()
+        } catch (e: Exception) {
+            Date()
+        }
+
         return Ticket(
             id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
             passengerId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_PASSENGER_ID)),
@@ -142,9 +150,7 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
             price = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
             paymentId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_PAYMENT_ID)),
             hasLuggage = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_HAS_LUGGAGE)) > 0,
-            bookedAt = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOKED_AT))?.let {
-                Date(it)
-            } ?: Date(),
+            bookedAt = bookedAtDate,
             status = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))?.let {
                 try {
                     TicketStatus.valueOf(it)

@@ -34,6 +34,7 @@
         <activity android:name=".ui.activities.TicketActivity"/>
         <activity android:name=".ui.activities.PaymentActivity"/>
         <activity android:name=".ui.activities.CountriesActivity"/>
+        <activity android:name=".ui.activities.ProfileActivity"/>
     </application>
 
 </manifest>
