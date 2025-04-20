@@ -89,7 +89,5 @@ class MainActivityUITest {
         }
 
         composeTestRule.onNodeWithText("Find out more").performClick()
-
-        // composeTestRule.onNodeWithText("Buy a ticket").performClick()
     }
 }
