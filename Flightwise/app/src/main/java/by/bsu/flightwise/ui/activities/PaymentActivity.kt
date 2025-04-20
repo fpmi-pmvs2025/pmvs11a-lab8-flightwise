@@ -99,7 +99,6 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
                         Uri.parse("https://youtu.be/dQw4w9WgXcQ?si=U0d2p_CD8-mOiVfg")
                     )
                     context.startActivity(youtubeIntent)
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,6 +135,9 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
                         Uri.parse("https://youtu.be/dQw4w9WgXcQ?si=U0d2p_CD8-mOiVfg")
                     )
                     context.startActivity(youtubeIntent)
+
+                    val mainActivityIntent = Intent(context, MainActivity::class.java)
+                    context.startActivity(mainActivityIntent)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
