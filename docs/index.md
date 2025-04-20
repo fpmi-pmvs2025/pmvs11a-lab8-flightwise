@@ -60,3 +60,10 @@ Team laboratory work on chosen subject area. Main aim of the work is to apply sk
     </td>
   </tr>
 </table>
+
+## Design
+The [design](https://www.figma.com/design/VqNQYq2KZ2AiWljsShsAlO/Untitled?node-id=0-1&t=Ouslw9tbzb4DAVXm-1) was implemented in Figma.
+![alt text](images/design.png)
+
+## Project management
+![alt text](images/project.png)
