@@ -24,7 +24,6 @@ import by.bsu.flightwise.ui.fragments.HeaderFragment
 import by.bsu.flightwise.ui.fragments.TicketFragment
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProfileActivity : ComponentActivity() {
@@ -32,7 +31,6 @@ class ProfileActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Если пользователь не авторизован, перенаправляем в LoginActivity
         if (!isUserAuthorized()) {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -64,7 +62,6 @@ fun ProfileScreen() {
     val context = androidx.compose.ui.platform.LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    // Извлекаем имя пользователя и идентификатор пассажира из SharedPreferences
     val preferences = context.getSharedPreferences("Session", Context.MODE_PRIVATE)
     val userName = preferences.getString("sessionID", "User")
         ?: "User"
@@ -72,7 +69,6 @@ fun ProfileScreen() {
 
     var tickets by remember { mutableStateOf<List<Ticket>>(emptyList()) }
 
-    // Загружаем билеты для данного пассажира
     LaunchedEffect(userName) {
         val dbHelper = DatabaseHelper(context)
         val db = dbHelper.readableDatabase
@@ -93,7 +89,6 @@ fun ProfileScreen() {
                 .padding(top = 120.dp, bottom = 64.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            // Вывод данных пользователя (слева)
             Text(
                 text = userName,
                 style = MaterialTheme.typography.headlineMedium
@@ -104,7 +99,6 @@ fun ProfileScreen() {
             )
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Заголовок "Your tickets" – синий
             Text(
                 text = stringResource(id = R.string.profile_tickets_text),
                 style = MaterialTheme.typography.titleMedium,
@@ -112,7 +106,6 @@ fun ProfileScreen() {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Отображение билетов или предупреждение, если билетов нет
             if (tickets.isEmpty()) {
                 Text(
                     text = stringResource(id = R.string.message_nothing_found),
