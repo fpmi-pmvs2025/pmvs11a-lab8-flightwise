@@ -149,7 +149,7 @@ fun TicketFragment(ticket: Ticket) {
             ) {
                 Column {
                     Text(
-                        text = "\$${ticket.price}",
+                        text = "$${"%.2f".format(ticket.price)}",
                         style = MaterialTheme.typography.titleMedium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
