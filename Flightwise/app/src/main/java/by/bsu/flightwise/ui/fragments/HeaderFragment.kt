@@ -28,6 +28,7 @@ import androidx.compose.runtime.*
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.activities.AboutActivity
 import by.bsu.flightwise.ui.activities.CountriesActivity
+import by.bsu.flightwise.ui.activities.ProfileActivity
 import by.bsu.flightwise.ui.activities.SearchTicketsActivity
 
 @Composable
@@ -82,7 +83,7 @@ fun HeaderFragment(
 
                     DropdownMenuItem(
                         onClick = {
-                            //context.startActivity(Intent(context, ProfileActivity::class.java))
+                            context.startActivity(Intent(context, ProfileActivity::class.java))
                             expanded = false
                         },
                         text = { Text(stringResource(id = R.string.menu_profile), style = MaterialTheme.typography.labelMedium) },
