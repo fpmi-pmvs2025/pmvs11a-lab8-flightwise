@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Flightwise</string>
+    <string name="app_copyright">© 2025 Flightwise</string>
+
+    <string name="countries_main_header">Исследуйте страны</string>
+    <string name="countries_main_description">Чтобы выбрать билет, вы можете сначала ознакомиться со странами здесь!</string>
+    <string name="countries_main_button_text">Узнать больше</string>
+
+    <string name="flights_main_header">Готовы отправиться</string>
+    <string name="flights_main_description">Если вы определились, можете сразу купить билет!</string>
+    <string name="flights_main_button_text">Купить билет</string>
+
+    <string name="menu_profile">Профиль</string>
+    <string name="menu_tickets">Билеты</string>
+    <string name="menu_countries">Страны</string>
+    <string name="menu_about">О приложении</string>
+
+    <string name="countries_search_placeholder">Поиск стран</string>
+    <string name="message_nothing_found">Ничего не найдено</string>
+
+    <string name="flights_from_placeholder">Откуда</string>
+    <string name="flights_to_placeholder">Куда</string>
+    <string name="flights_leave_date_placeholder">Дата отправления</string>
+    <string name="flights_return_date_placeholder">Дата возвращения</string>
+    <string name="flights_passengers_placeholder">Количество пассажиров</string>
+    <string name="search_button_text">Поиск</string>
+    <string name="error_message_fill_form">Пожалуйста, заполните форму</string>
+    <string name="error_message_data_wrong">Пожалуйста, проверьте введённые данные</string>
+    <string name="luggage_checkbox_text">С багажом</string>
+
+    <string name="error_incorrect_date_format">Неверный формат даты</string>
+    <string name="flight_price_for_passengers">Цена для %d пассажиров</string>
+    <string name="flight_price_for_passenger">Цена для %d пассажирора</string>
+
+    <string name="name_placeholder">Имя</string>
+    <string name="surname_placeholder">Фамилия</string>
+    <string name="passport_number_placeholder">Номер паспорта</string>
+    <string name="birth_date_placeholder">Дата рождения</string>
+    <string name="add_button_text">Добавить</string>
+    <string name="continue_button_text">Продолжить</string>
+
+    <string name="payment_header">Выберите способ оплаты</string>
+    <string name="payment_paypal">PayPal</string>
+    <string name="payment_card">Карта</string>
+
+    <string name="profile_passenger_role">Пассажир</string>
+    <string name="profile_tickets_text">Ваши билеты</string>
+
+    <string name="auth_username_placeholder">Имя пользователя</string>
+    <string name="auth_password_placeholder">Пароль</string>
+    <string name="auth_confirm_password_placeholder">Подтвердите пароль</string>
+    <string name="error_message_auth_failed">Ошибка аутентификации</string>
+    <string name="auth_login_text">Войти</string>
+    <string name="auth_register_text">Зарегистрироваться</string>
+    <string name="auth_register_to_login">Уже есть аккаунт?</string>
+    <string name="auth_login_to_register">Еще нет аккаунта?</string>
+    <string name="auth_error_password_mismatch">Пароли не совпадают</string>
+    <string name="auth_error_not_filled_inputs">Заполните все поля</string>
+
+
+    <string name="auth_error_registration_failed">Ошибка регистрации</string>
+    <string name="about_heading">Flightwise — это приложение для поиска билетов</string>
+    <string name="about_creators_text">Создатели</string>
+    <string name="team_members">Райцина Юлия, Филиппов Кирилл, Сенькевич Станислав</string>
+    <string name="error_all_fields_required">Все поля должны быть заполнены</string>
+
+    <string name="ticket_not_found">Билет не найден.</string>
+    <string name="cancel_button_text">Отменить</string>
+</resources>
