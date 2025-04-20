@@ -99,6 +99,7 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
                         Uri.parse("https://youtu.be/dQw4w9WgXcQ?si=U0d2p_CD8-mOiVfg")
                     )
                     context.startActivity(youtubeIntent)
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -117,6 +118,19 @@ fun PaymentScreen(ticket: Ticket?, passengers: List<Passenger>?) {
 
             Button(
                 onClick = {
+                    val dbHelper = DatabaseHelper(context)
+                    val db = dbHelper.writableDatabase
+                    val passengerDao = PassengerDaoImpl(db)
+                    val ticketDao = TicketDaoImpl(db)
+
+                    passengers?.forEach { passenger ->
+                        val insertedPassengerId = passengerDao.insert(passenger)
+                        ticket?.let { t ->
+                            val ticketToInsert = t.copy(passengerId = insertedPassengerId)
+                            ticketDao.insert(ticketToInsert)
+                        }
+                    }
+
                     val youtubeIntent = Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse("https://youtu.be/dQw4w9WgXcQ?si=U0d2p_CD8-mOiVfg")
