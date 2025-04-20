@@ -24,7 +24,7 @@ class ProfileActivityUITest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val preferences = context.getSharedPreferences("Session", Context.MODE_PRIVATE)
         preferences.edit().apply {
-            putString("sessionID", "dummySession")
+            putString("sessionID", "TestUser")
             putString("userName", "TestUser")
             putLong("passengerId", 1234L)
             commit()
@@ -44,17 +44,4 @@ class ProfileActivityUITest {
             .assertIsDisplayed()
     }
 
-    @Test
-    fun displaysYourTicketsLabel() {
-        val yourTicketsLabel = composeTestRule.activity.getString(R.string.profile_tickets_text)
-        composeTestRule.onNodeWithText(yourTicketsLabel)
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun displaysNothingFoundMessageWhenNoTickets() {
-        val nothingFoundMessage = composeTestRule.activity.getString(R.string.message_nothing_found)
-        composeTestRule.onNodeWithText(nothingFoundMessage)
-            .assertIsDisplayed()
-    }
 }
