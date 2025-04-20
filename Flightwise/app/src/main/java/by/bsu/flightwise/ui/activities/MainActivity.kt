@@ -101,7 +101,7 @@ fun FlightwiseApp() {
             )
             Button(
                 onClick = {
-                    // context.startActivity(Intent(context, CountriesActivity::class.java))
+                    context.startActivity(Intent(context, CountriesActivity::class.java))
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)
