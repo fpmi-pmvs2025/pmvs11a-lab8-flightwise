@@ -27,6 +27,7 @@ import androidx.compose.runtime.*
 
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.activities.AboutActivity
+import by.bsu.flightwise.ui.activities.CountriesActivity
 import by.bsu.flightwise.ui.activities.SearchTicketsActivity
 
 @Composable
@@ -103,7 +104,7 @@ fun HeaderFragment(
                     )
                     DropdownMenuItem(
                         onClick = {
-                            //context.startActivity(Intent(context, CountriesActivity::class.java))
+                            context.startActivity(Intent(context, CountriesActivity::class.java))
                             expanded = false
                         },
                         text = { Text(stringResource(id = R.string.menu_countries), style = MaterialTheme.typography.labelMedium) },
