@@ -21,10 +21,14 @@ import by.bsu.flightwise.R
 import by.bsu.flightwise.data.dao.impl.UserDaoImpl
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
+import by.bsu.flightwise.service.setupDatabase
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setupDatabase(this)
+
         setContent {
             FlightwiseTheme {
                 Surface(

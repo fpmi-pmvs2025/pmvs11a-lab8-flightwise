@@ -28,6 +28,9 @@
     <string name="error_message_data_wrong">Please, check filled data</string>
     <string name="luggage_checkbox_text">With luggage</string>
 
+    <string name="error_all_fields_required">All fields are required</string>
+    <string name="error_incorrect_date_format">Incorrect date format</string>
+
     <string name="flight_price_for_passengers">Price for %d passengers</string>
     <string name="flight_price_for_passenger">Price for %d passenger</string>
 
@@ -60,4 +63,7 @@
     <string name="about_heading">Flightwise is a ticket-search application</string>
     <string name="about_creators_text">This app was created by</string>
     <string name="team_members">Raitsyna Yuliya, Filippov Cyril, Senkevich Stanislau</string>
+
+    <string name="ticket_not_found">Ticket not found.</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>

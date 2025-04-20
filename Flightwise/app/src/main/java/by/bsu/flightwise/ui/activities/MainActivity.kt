@@ -1,5 +1,6 @@
 package by.bsu.flightwise.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import by.bsu.flightwise.R
 import by.bsu.flightwise.ui.theme.FlightwiseTheme
 import by.bsu.flightwise.ui.fragments.*
+import java.io.FileOutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             FlightwiseTheme {
@@ -128,7 +131,7 @@ fun FlightwiseApp() {
             )
             Button(
                 onClick = {
-                    // context.startActivity(Intent(context, SearchTicketsActivity::class.java))
+                    context.startActivity(Intent(context, SearchTicketsActivity::class.java))
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)

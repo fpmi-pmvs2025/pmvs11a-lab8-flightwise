@@ -28,6 +28,10 @@
         <activity android:name=".ui.activities.MainActivity"/>
         <activity android:name=".ui.activities.RegisterActivity"/>
         <activity android:name=".ui.activities.AboutActivity"/>
+        <activity android:name=".ui.activities.SearchTicketsActivity"/>
+        <activity android:name=".ui.activities.TicketsActivity"/>
+        <activity android:name=".ui.activities.TicketActivity"/>
+        <activity android:name=".ui.activities.PaymentActivity"/>
     </application>
 
 </manifest>

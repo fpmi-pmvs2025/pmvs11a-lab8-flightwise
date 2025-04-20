@@ -7,7 +7,9 @@ import by.bsu.flightwise.data.dao.TicketDao
 import by.bsu.flightwise.data.database.DatabaseHelper
 import by.bsu.flightwise.data.entity.Ticket
 import by.bsu.flightwise.data.entity.TicketStatus
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
     companion object {
@@ -23,13 +25,18 @@ class TicketDaoImpl(private val db: SQLiteDatabase) : TicketDao {
     }
 
     override fun insert(ticket: Ticket): Long {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val values = ContentValues().apply {
             put(COLUMN_PASSENGER_ID, ticket.passengerId)
             put(COLUMN_FLIGHT_ID, ticket.flightId)
             put(COLUMN_PRICE, ticket.price)
+            put(COLUMN_BOOKED_AT, dateFormat.format(Date()))
+            put(COLUMN_STATUS, ticket.status.name)
+            put(COLUMN_HAS_LUGGAGE, if (ticket.hasLuggage) 1 else 0)
         }
         return db.insert(TABLE_TICKETS, null, values)
     }
+
 
     override fun getById(id: Long): Ticket? {
         val cursor = db.query(
