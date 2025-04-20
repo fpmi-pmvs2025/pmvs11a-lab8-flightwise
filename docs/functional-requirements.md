@@ -38,10 +38,9 @@
 
 **Main flow**:
 
-1) User opens the app on main page.
-2) He can only navigate to countries page by button or dropping menu. If he navigates to other pages, he will be redirected to register or login forms.
-3) User enters username and password (and confirm password) and submittes the form.
-4) In case of success, user is navigated to main page, visa versa error message appeares.
+1) User opens the app on login page.
+2) User enters username and password (and confirm password) and submittes the form.
+3) In case of success, user is navigated to main page, visa versa error message appeares.
 
 ### Scenario 2: Buying tickets
 
